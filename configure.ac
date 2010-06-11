@@ -28,7 +28,7 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(time_t)
 
 # Checks for library functions.
-AC_CHECK_FUNCS([mktime])
+AC_CHECK_FUNCS([mktime strtoll])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

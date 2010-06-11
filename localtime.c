@@ -1,14 +1,13 @@
 #include "timetester.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 
 int main(int argc, char *argv[])
 {
   time_t t;
   struct tm *tmp;
+  int res;
 
-  t = atol(argv[1]);
+  res = str2time(argv[1], &t);
+  if (res == -1) { perror("str2time"); exit(1); }
 
   tmp = localtime(&t);
   if (tmp == NULL) { fprintf(stderr, "localtime error\n"); exit(1); }

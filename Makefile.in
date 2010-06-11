@@ -5,12 +5,12 @@ LDFLAGS = @LDFLAGS@
 
 all: localtime mktime info
 
-localtime: localtime.o
+localtime: localtime.o util.o
 mktime: mktime.o
 info: info.o
 
 # gcc -MM *.c
 info.o: info.c
-localtime.o: localtime.c timetester.h config.h
+localtime.o: localtime.c timetester.h config.h util.h
 mktime.o: mktime.c
-
+util.o: util.c timetester.h config.h util.h
