@@ -1,12 +1,16 @@
+CC = @CC@
+CFLAGS = @CFLAGS@
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+
 all: localtime mktime info
 
 localtime: localtime.o
-
-localtime.o: localtime.c
-
 mktime: mktime.o
+info: info.o
 
+# gcc -MM *.c
+info.o: info.c
+localtime.o: localtime.c timetester.h config.h
 mktime.o: mktime.c
 
-info: info.o
-info.o: info.c
