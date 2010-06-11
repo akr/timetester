@@ -1,0 +1,13 @@
+Makefile
+autom4te.cache
+autoscan.log
+config.h
+config.log
+config.status
+configure
+info
+localtime
+mktime
+*.o
+*~
+*.swp
