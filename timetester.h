@@ -5,12 +5,15 @@
 #include <time.h>
 #include <errno.h>
 
-#if SIZEOF_TIME_T == SIZEOF_LONG
-typedef unsigned long unsigned_time_t;
-#elif SIZEOF_TIME_T == SIZEOF_INT
-typedef unsigned int unsigned_time_t;
+#if SIZEOF_TIME_T == SIZEOF_INT
+  typedef unsigned int unsigned_time_t;
+# define PRIdTIME "d"
+#elif SIZEOF_TIME_T == SIZEOF_LONG
+  typedef unsigned long unsigned_time_t;
+# define PRIdTIME "ld"
 #elif SIZEOF_TIME_T == SIZEOF_LONG_LONG
-typedef unsigned long long unsigned_time_t;
+  typedef unsigned long long unsigned_time_t;
+# define PRIdTIME "lld"
 #else
 # error cannot find integer type which size is same as time_t.
 #endif
