@@ -7,10 +7,10 @@ all: localtime mktime info
 
 localtime: localtime.o util.o
 mktime: mktime.o
-info: info.o
+info: info.o util.o
 
 # gcc -MM *.c
-info.o: info.c
+info.o: info.c timetester.h config.h util.h
 localtime.o: localtime.c timetester.h config.h util.h
 mktime.o: mktime.c
 util.o: util.c timetester.h config.h util.h
