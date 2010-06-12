@@ -50,13 +50,25 @@
 
 #if SIZEOF_TIME_T == SIZEOF_INT
   typedef unsigned int unsigned_time_t;
-# define PRIdTIME "d"
+# ifdef TIME_IS_SIGNED
+#   define PRIdTIME "d"
+# else
+#   define PRIdTIME "u"
+# endif
 #elif SIZEOF_TIME_T == SIZEOF_LONG
   typedef unsigned long unsigned_time_t;
-# define PRIdTIME "ld"
+# ifdef TIME_IS_SIGNED
+#   define PRIdTIME "ld"
+# else
+#   define PRIdTIME "lu"
+# endif
 #elif SIZEOF_TIME_T == SIZEOF_LONG_LONG
   typedef unsigned long long unsigned_time_t;
-# define PRIdTIME "lld"
+# ifdef TIME_IS_SIGNED
+#   define PRIdTIME "lld"
+# else
+#   define PRIdTIME "llu"
+# endif
 #else
 # error cannot find integer type which size is same as time_t.
 #endif
