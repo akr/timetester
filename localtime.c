@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     char gmtoff_buf[16];
     ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), tmp->tm_gmtoff);
     if (0 < ret && ret < sizeof(gmtoff_buf))
-      printf(" %s (%ld)", gmtoff_buf, tmp->tm_gmtoff);
+      printf(" %s", gmtoff_buf);
     else
       printf(" gmtoff=%ld", tmp->tm_gmtoff);
   }
