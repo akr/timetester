@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
   y = (long long)tmp->tm_year + 1900;
 
-  printf("localtime: %"PRIdTIME" -> %lld-%02d-%02d %02d:%02d:%02d",
+  printf("%"PRIdTIME" -> %lld-%02d-%02d %02d:%02d:%02d",
     t,
     y, tmp->tm_mon + 1, tmp->tm_mday,
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
@@ -37,6 +37,17 @@ int main(int argc, char *argv[])
 #ifdef HAVE_STRUCT_TM_TM_ZONE
   printf(" (%s)", tmp->tm_zone);
 #endif
+
+  printf(" yday=%d", tmp->tm_yday);
+
+  {
+    char buf[16];
+    ret = format_wday(buf, sizeof(buf), tmp->tm_wday);
+    if (0 < ret && ret < sizeof(buf))
+      printf(" %s", buf);
+    else
+      printf(" wday=%d", tmp->tm_wday);
+  }
 
   printf("\n");
 

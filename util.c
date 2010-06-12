@@ -55,3 +55,27 @@ int format_gmtoff(char *buf, size_t bufsize, int gmtoff)
   return ret;
 }
 
+static char *weekday(int wday)
+{
+  switch (wday) {
+    case 0: return "Sun";
+    case 1: return "Mon";
+    case 2: return "Tue";
+    case 3: return "Wed";
+    case 4: return "Thu";
+    case 5: return "Fri";
+    case 6: return "Sat";
+    default: return NULL;
+  }
+}
+
+int format_wday(char *buf, size_t bufsize, int wday)
+{
+  char *s = weekday(wday);
+  int ret;
+  if (s)
+    ret = snprintf(buf, bufsize, "%s", s);
+  else
+    ret = snprintf(buf, bufsize, "wday=%d", wday);
+  return ret;
+}
