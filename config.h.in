@@ -1,5 +1,17 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the declaration of `altzone', and to 0 if you
+   don't. */
+#undef HAVE_DECL_ALTZONE
+
+/* Define to 1 if you have the declaration of `daylight', and to 0 if you
+   don't. */
+#undef HAVE_DECL_DAYLIGHT
+
+/* Define to 1 if you have the declaration of `timezone', and to 0 if you
+   don't. */
+#undef HAVE_DECL_TIMEZONE
+
 /* Define to 1 if you have the declaration of `tzname', and to 0 if you don't.
    */
 #undef HAVE_DECL_TZNAME

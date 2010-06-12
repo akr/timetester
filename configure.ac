@@ -58,5 +58,7 @@ AC_RUN_IFELSE(AC_LANG_PROGRAM(
 # Checks for library functions.
 AC_CHECK_FUNCS([mktime strtoll])
 
+AC_CHECK_DECLS([tzname, timezone, daylight, altzone],,,[$incs])
+
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
