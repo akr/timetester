@@ -14,7 +14,7 @@ int timenum_parse(const char *str, time_t *res)
 # error sizeof(time_t) unexpected.
 #endif
 
-#ifndef TIME_IS_SIGNED
+#ifdef TIME_IS_SIGNED
   CONVTYPE v;
   errno = 0;
   v = CONVFUN_SIGNED(str, NULL, 0);
