@@ -5,7 +5,6 @@ int main(int argc, char *argv[])
   time_t t;
   struct tm *tmp;
   long long y;
-  char gmtoff_buf[16];
   int ret;
 
   ret = timenum_parse(argv[1], &t);
@@ -22,11 +21,14 @@ int main(int argc, char *argv[])
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
 
 #ifdef HAVE_STRUCT_TM_TM_GMTOFF
-  ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), tmp->tm_gmtoff);
-  if (0 < ret && ret < sizeof(gmtoff_buf))
-    printf(" %s (%ld)", gmtoff_buf, tmp->tm_gmtoff);
-  else
-    printf(" gmtoff=%ld", tmp->tm_gmtoff);
+  {
+    char gmtoff_buf[16];
+    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), tmp->tm_gmtoff);
+    if (0 < ret && ret < sizeof(gmtoff_buf))
+      printf(" %s (%ld)", gmtoff_buf, tmp->tm_gmtoff);
+    else
+      printf(" gmtoff=%ld", tmp->tm_gmtoff);
+  }
 #endif
 
   printf(" %s",
