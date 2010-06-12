@@ -16,7 +16,7 @@ AC_USE_SYSTEM_EXTENSIONS
 # Checks for header files.
 
 AC_HEADER_TIME
-AC_CHECK_HEADERS([sys/time.h errno.h])
+AC_CHECK_HEADERS([sys/time.h errno.h limits.h])
 
 incs="AC_INCLUDES_DEFAULT
 #if TIME_WITH_SYS_TIME
@@ -31,6 +31,9 @@ incs="AC_INCLUDES_DEFAULT
 #endif
 #if HAVE_ERRNO_H
 # include <errno.h>
+#endif
+#if HAVE_LIMITS_H
+# include <limits.h>
 #endif
 "
 
