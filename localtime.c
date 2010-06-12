@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     tmp->tm_isdst > 0 ? "dst" : tmp->tm_isdst == 0 ? "std" : "unknown");
 
 #ifdef HAVE_STRUCT_TM_TM_ZONE
-  printf(" zone=%s", tmp->tm_zone);
+  printf(" (%s)", tmp->tm_zone);
 #endif
 
   printf("\n");
