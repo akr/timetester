@@ -44,8 +44,9 @@
 #  include <time.h>
 # endif
 #endif
-
-#include <errno.h>
+#if HAVE_ERRNO_H
+# include <errno.h>
+#endif
 
 #if SIZEOF_TIME_T == SIZEOF_INT
   typedef unsigned int unsigned_time_t;

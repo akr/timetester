@@ -59,10 +59,13 @@ AC_INCLUDES_DEFAULT([
 #  include <time.h>
 # endif
 #endif
+#if HAVE_ERRNO_H
+# include <errno.h>
+#endif
 ])
 
 AC_HEADER_TIME
-AC_CHECK_HEADERS(sys/time.h)
+AC_CHECK_HEADERS(sys/time.h errno.h)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_STRUCT_TIMEZONE
