@@ -5,6 +5,7 @@
 
 int main(int argc, char *argv[])
 {
+  int ret;
 
   printf("time_t\t\t: %s %dbit\n", SIGNED_STR_OF_TYPE(time_t), CHAR_BIT * (int)sizeof(time_t));
   printf("char\t\t: %s %dbit\n", SIGNED_STR_OF_TYPE(char), CHAR_BIT * (int)sizeof(char));
@@ -46,11 +47,25 @@ int main(int argc, char *argv[])
 #endif
 
 #if HAVE_DECL_TIMEZONE
-  printf("timezone\t: %d\n", (int)timezone);
+  {
+    char buf[16];
+    ret = format_gmtoff(buf, sizeof(buf), timezone);
+    if (0 < ret && ret < sizeof(buf))
+      printf("timezone\t: %s (%d)\n", buf, (int)timezone);
+    else
+      printf("timezone\t: %d\n", (int)timezone);
+  }
 #endif
 
 #if HAVE_DECL_ALTZONE
-  printf("altzone\t\t: %d\n", (int)altzone);
+  {
+    char buf[16];
+    ret = format_gmtoff(buf, sizeof(buf), altzone);
+    if (0 < ret && ret < sizeof(buf))
+      printf("altzone\t\t: %s (%d)\n", buf, (int)altzone);
+    else
+      printf("altzone\t\t: %d\n", (int)altzone);
+  }
 #endif
 
 #if HAVE_DECL_TZNAME
