@@ -1,6 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
+#include "timetester.h"
 
 char *weekday(int wday)
 {
