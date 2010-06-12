@@ -14,24 +14,22 @@ int str2time(const char *str, time_t *res)
 # error sizeof(time_t) unexpected.
 #endif
 
-  if (SIGNED_TIME_P) {
-    CONVTYPE v;
-    errno = 0;
-    v = CONVFUN_SIGNED(str, NULL, 0);
-    if (errno)
-      return -1;
-    *res = v;
-    return 0;
-  }
-  else {
-    unsigned CONVTYPE v;
-    errno = 0;
-    v = CONVFUN_UNSIGNED(str, NULL, 0);
-    if (errno)
-      return -1;
-    *res = v;
-    return 0;
-  }
-
+#ifndef TIME_IS_SIGNED
+  CONVTYPE v;
+  errno = 0;
+  v = CONVFUN_SIGNED(str, NULL, 0);
+  if (errno)
+    return -1;
+  *res = v;
+  return 0;
+#else
+  unsigned CONVTYPE v;
+  errno = 0;
+  v = CONVFUN_UNSIGNED(str, NULL, 0);
+  if (errno)
+    return -1;
+  *res = v;
+  return 0;
+#endif
 }
 

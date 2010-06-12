@@ -77,13 +77,10 @@ AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(time_t)
 
-#AC_RUN_IFELSE([
-#int main(int argc, char *argv[])
-#{
-##define SIGNED_TIME_P (~(time_t)0 <= 0)
-#  return SIGNED_TIME_P ? EXIT_SUCCESS : EXIT_FAILURE;
-#}
-#], [], [])
+AC_RUN_IFELSE(AC_LANG_PROGRAM(
+  [$ac_includes_default],
+  [exit((~(time_t)0 <= 0) ? EXIT_SUCCESS : EXIT_FAILURE);]),
+  [AC_DEFINE(TIME_IS_SIGNED, [], [Define to 1 if time_t is signed type.])])
 
 # Checks for library functions.
 AC_CHECK_FUNCS([mktime strtoll])

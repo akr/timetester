@@ -61,9 +61,12 @@
 # error cannot find integer type which size is same as time_t.
 #endif
 
-#define SIGNED_TIME_P (~(time_t)0 <= 0)
-
-#define TIME_MAX (SIGNED_TIME_P ? (time_t)((~(unsigned_time_t)0) >> 1) : (time_t)(~(unsigned_time_t)0))
-#define TIME_MIN (SIGNED_TIME_P ? (time_t)(((unsigned_time_t)1) << (sizeof(time_t) * CHAR_BIT - 1)) : (time_t)0)
+#ifdef TIME_IS_SIGNED
+# define TIME_MAX ((time_t)((~(unsigned_time_t)0) >> 1))
+# define TIME_MIN ((time_t)(((unsigned_time_t)1) << (sizeof(time_t) * CHAR_BIT - 1)))
+#else
+# define TIME_MAX ((time_t)(~(unsigned_time_t)0))
+# define TIME_MIN ((time_t)0)
+#endif
 
 #include "util.h"
