@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 #endif
 
 #if HAVE_DECL_ALTZONE
-  printf("altzone\t: %d\n", (int)altzone);
+  printf("altzone\t\t: %d\n", (int)altzone);
 #endif
 
 #if HAVE_DECL_TZNAME
