@@ -19,7 +19,7 @@ int timenum_parse(const char *str, time_t *res)
 #       define CONVFUN(s,e,b) strtoull(s,e,b)
 #   endif
 #else
-# error sizeof(time_t) unexpected.
+#   error sizeof(time_t) unexpected.
 #endif
 
   CONVTYPE v;
