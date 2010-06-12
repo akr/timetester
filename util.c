@@ -1,6 +1,6 @@
 #include "timetester.h"
 
-int str2time(const char *str, time_t *res)
+int timenum_parse(const char *str, time_t *res)
 {
 #if SIZEOF_TIME_T <= SIZEOF_LONG
 #   define CONVTYPE long

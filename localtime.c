@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
   int res;
   long long y;
 
-  res = str2time(argv[1], &t);
+  res = timenum_parse(argv[1], &t);
   if (res == -1) { perror("str2time"); exit(1); }
 
   tmp = localtime(&t);

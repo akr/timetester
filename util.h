@@ -1,2 +1,2 @@
 /* 0:success, -1:failure */
-int str2time(const char *str, time_t *res);
+int timenum_parse(const char *str, time_t *res);
