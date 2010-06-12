@@ -14,41 +14,11 @@ AC_USE_SYSTEM_EXTENSIONS
 # Checks for libraries.
 
 # Checks for header files.
-AC_INCLUDES_DEFAULT([
-#include <stdio.h>
-#if HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#if HAVE_SYS_STAT_H
-# include <sys/stat.h>
-#endif
-#if STDC_HEADERS
-# include <stdlib.h>
-# include <stddef.h>
-#else
-# if HAVE_STDLIB_H
-#  include <stdlib.h>
-# endif
-#endif
-#if HAVE_STRING_H
-# if !STDC_HEADERS && HAVE_MEMORY_H
-#  include <memory.h>
-# endif
-# include <string.h>
-#endif
-#if HAVE_STRINGS_H
-# include <strings.h>
-#endif
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+
+AC_HEADER_TIME
+AC_CHECK_HEADERS([sys/time.h errno.h])
+
+incs="AC_INCLUDES_DEFAULT
 #if TIME_WITH_SYS_TIME
 # include <sys/time.h>
 # include <time.h>
@@ -62,14 +32,11 @@ AC_INCLUDES_DEFAULT([
 #if HAVE_ERRNO_H
 # include <errno.h>
 #endif
-])
-
-AC_HEADER_TIME
-AC_CHECK_HEADERS(sys/time.h errno.h)
+"
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_STRUCT_TIMEZONE
-AC_CHECK_MEMBERS([struct tm.tm_gmtoff])
+AC_CHECK_MEMBERS([struct tm.tm_gmtoff],,,[$incs])
 
 AC_CHECK_TYPES(long long)
 AC_CHECK_SIZEOF(int)
@@ -78,7 +45,7 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(time_t)
 
 AC_RUN_IFELSE(AC_LANG_PROGRAM(
-  [$ac_includes_default],
+  [$incs],
   [exit((~(time_t)0 <= 0) ? EXIT_SUCCESS : EXIT_FAILURE);]),
   [AC_DEFINE(TIME_IS_SIGNED, [], [Define to 1 if time_t is signed type.])])
 
