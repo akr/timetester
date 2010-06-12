@@ -68,6 +68,8 @@ int main(int argc, char *argv[])
 
 #ifdef HAVE_STRUCT_TM_TM_ZONE
   printf(" (%s)", tmp.tm_zone);
+#elif defined(HAVE_DECL_TZNAME)
+  printf(" (%s)", 0 < tmp.tm_isdst ? tzname[1] : tmp.tm_isdst == 0 ? tzname[0] : "invalid-isdst");
 #endif
 
   printf(" yday=%d",
