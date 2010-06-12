@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
   int ret;
 
   ret = timenum_parse(argv[1], &t);
-  if (ret == -1) { perror("str2time"); exit(1); }
+  if (ret == -1) { perror("timenum_parse"); exit(1); }
 
   tmp = localtime(&t);
   if (tmp == NULL) { fprintf(stderr, "localtime error\n"); exit(1); }
