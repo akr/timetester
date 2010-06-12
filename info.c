@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
   printf("long long\t: %dbit\n", CHAR_BIT * (int)sizeof(long long));
 #endif
 
+  printf("\n");
+
   {
     struct tm v;
     memset((void*)&v, 0xff, sizeof(v));
@@ -34,6 +36,26 @@ int main(int argc, char *argv[])
     printf("  tm_zone\t: %dbit\n", CHAR_BIT * (int)sizeof(v.tm_zone));
 #endif
   }
+
+  printf("\n");
+
+  tzset();
+
+#if HAVE_DECL_DAYLIGHT
+  printf("daylight\t: %d\n", daylight);
+#endif
+
+#if HAVE_DECL_TIMEZONE
+  printf("timezone\t: %d\n", (int)timezone);
+#endif
+
+#if HAVE_DECL_ALTZONE
+  printf("altzone\t: %d\n", (int)altzone);
+#endif
+
+#if HAVE_DECL_TZNAME
+  printf("tzname\t\t: \"%s\", \"%s\"\n", tzname[0], tzname[1]);
+#endif
 
   return 0;
 }
