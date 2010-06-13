@@ -56,9 +56,14 @@ AC_RUN_IFELSE(AC_LANG_PROGRAM(
   [AC_DEFINE(TIME_IS_SIGNED, [], [Define to 1 if time_t is signed type.])])
 
 # Checks for library functions.
-AC_CHECK_FUNCS([mktime strtoll timezone])
+AC_CHECK_FUNCS([mktime strtoll])
 
 AC_CHECK_DECLS([tzname, timezone, daylight, altzone],,,[$incs])
+
+AC_COMPILE_IFELSE(AC_LANG_PROGRAM(
+  [$incs],
+  [timezone();]),
+  [AC_DEFINE(HAVE_FUNC_TIMEZONE, [], [Define to 1 if the function timezone() is available.])])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
