@@ -38,7 +38,7 @@ void do_localtime(time_t t)
     }
 #endif
 
-    printf(" %s(%d)",
+    printf(" tm_isdst=%s(%d)",
       tmp->tm_isdst > 0 ? "dst" : tmp->tm_isdst == 0 ? "std" : "unknown",
       tmp->tm_isdst);
 
