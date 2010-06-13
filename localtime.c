@@ -26,39 +26,86 @@ void do_localtime(time_t t)
     y, tmp->tm_mon + 1, tmp->tm_mday,
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
 
+  if (opt_v) {
 #ifdef HAVE_STRUCT_TM_TM_GMTOFF
-  {
-    char buf[16];
-    ret = format_gmtoff(buf, sizeof(buf), tmp->tm_gmtoff);
-    if (0 < ret && ret < sizeof(buf))
-      printf(" %s", buf);
-    else
-      printf(" gmtoff=%ld", tmp->tm_gmtoff);
-  }
-#elif defined(HAVE_DECL_TIMEZONE) && defined(HAVE_DECL_ALTZONE)
-  {
-    char buf[16];
-    time_t gmtoff = tmp->tm_isdst ? altzone : timezone;
-    gmtoff = -gmtoff;
-    ret = format_gmtoff(buf, sizeof(buf), (int)gmtoff);
-    if (0 < ret && ret < sizeof(buf))
-      printf(" %s", buf);
-    else
-      printf(" gmtoff=%"PRIdTIME, gmtoff);
-  }
+    {
+      char buf[16];
+      ret = format_gmtoff(buf, sizeof(buf), tmp->tm_gmtoff);
+      if (0 < ret && ret < sizeof(buf))
+        printf(" %s", buf);
+      else
+        printf(" tm_gmtoff=%ld", tmp->tm_gmtoff);
+    }
 #endif
 
-  printf(" %s",
-    tmp->tm_isdst > 0 ? "dst" : tmp->tm_isdst == 0 ? "std" : "unknown");
+    printf(" %s(%d)",
+      tmp->tm_isdst > 0 ? "dst" : tmp->tm_isdst == 0 ? "std" : "unknown",
+      tmp->tm_isdst);
+
+#if HAVE_DECL_DAYLIGHT
+    printf(" daylight=%d", daylight);
+#endif
+
+#if HAVE_DECL_TIMEZONE && !defined(HAVE_FUNC_TIMEZONE)
+     
+    {
+      char buf[16];
+      ret = format_gmtoff(buf, sizeof(buf), (int)-timezone);
+      if (0 < ret && ret < sizeof(buf))
+        printf(" timezone=%s(%"PRIdTIME")", buf, timezone);
+      else
+        printf(" timezone=%"PRIdTIME, timezone);
+    }
+#endif
+
+#if HAVE_DECL_ALTZONE
+    {
+      char buf[16];
+      ret = format_gmtoff(buf, sizeof(buf), (int)-altzone);
+      if (0 < ret && ret < sizeof(buf))
+        printf(" altzone=%s(%"PRIdTIME")", buf, altzone);
+      else
+        printf(" altzone=%"PRIdTIME, altzone);
+    }
+#endif
+
+#if HAVE_DECL_TZNAME
+    printf(" tzname=\"%s\",\"%s\"", tzname[0], tzname[1]);
+#endif
+
+  }
+  else {
+#ifdef HAVE_STRUCT_TM_TM_GMTOFF
+    {
+      char buf[16];
+      ret = format_gmtoff(buf, sizeof(buf), tmp->tm_gmtoff);
+      if (0 < ret && ret < sizeof(buf))
+        printf(" %s", buf);
+      else
+        printf(" gmtoff=%ld", tmp->tm_gmtoff);
+    }
+#elif defined(HAVE_DECL_TIMEZONE) && defined(HAVE_DECL_ALTZONE)
+    {
+      char buf[16];
+      time_t gmtoff = tmp->tm_isdst ? altzone : timezone;
+      gmtoff = -gmtoff;
+      ret = format_gmtoff(buf, sizeof(buf), (int)gmtoff);
+      if (0 < ret && ret < sizeof(buf))
+        printf(" %s", buf);
+      else
+        printf(" gmtoff=%"PRIdTIME, gmtoff);
+    }
+#endif
 
 #ifdef HAVE_STRUCT_TM_TM_ZONE
-  printf(" (%s)", tmp->tm_zone);
+    printf(" %s", tmp->tm_zone);
 #elif HAVE_DECL_TZNAME
-  if (tmp->tm_isdst)
-    printf(" (%s)", tzname[1]);
-  else
-    printf(" (%s)", tzname[0]);
+    if (tmp->tm_isdst)
+      printf(" %s", tzname[1]);
+    else
+      printf(" %s", tzname[0]);
 #endif
+  }
 
   printf(" yday=%d", tmp->tm_yday);
 
