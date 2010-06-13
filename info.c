@@ -3,10 +3,8 @@
 #define SIGNED_INTEGER_P(type) (~(type)0 <= 0 ? 1 : 0)
 #define SIGNED_STR_OF_TYPE(type) (SIGNED_INTEGER_P(type) ? "signed" : "unsigned")
 
-int main(int argc, char *argv[])
+void info_static(void)
 {
-  int ret;
-
   printf("time_t\t\t: %s %dbit\n", SIGNED_STR_OF_TYPE(time_t), CHAR_BIT * (int)sizeof(time_t));
   printf("char\t\t: %s %dbit\n", SIGNED_STR_OF_TYPE(char), CHAR_BIT * (int)sizeof(char));
   printf("int\t\t: %dbit\n", CHAR_BIT * (int)sizeof(int));
@@ -39,8 +37,12 @@ int main(int argc, char *argv[])
   }
 
   printf("\n");
+}
 
-  tzset();
+
+void info_dynamic(void)
+{
+  int ret;
 
 #if HAVE_DECL_DAYLIGHT
   printf("daylight\t: %d\n", daylight);
@@ -71,6 +73,14 @@ int main(int argc, char *argv[])
 #if HAVE_DECL_TZNAME
   printf("tzname\t\t: \"%s\", \"%s\"\n", tzname[0], tzname[1]);
 #endif
+}
+
+int main(int argc, char *argv[])
+{
+  info_static();
+
+  tzset();
+  info_dynamic();
 
   return 0;
 }
