@@ -40,10 +40,11 @@ int format_gmtoff(char *buf, size_t bufsize, int gmtoff)
   int ret;
   t = gmtoff;
   sign = 1;
-  if (gmtoff < 0) {
+  if (gmtoff <= 0) {
     sign = -1;
     t = -t;
   }
+  sign = -sign;
   s = t % 60;
   t = t / 60;
   m = t % 60;
