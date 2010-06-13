@@ -43,6 +43,11 @@ void do_localtime(time_t t)
 
 #ifdef HAVE_STRUCT_TM_TM_ZONE
   printf(" (%s)", tmp->tm_zone);
+#elif HAVE_DECL_TZNAME
+  if (tmp->tm_isdst)
+    printf(" (%s)", tzname[1]);
+  else
+    printf(" (%s)", tzname[0]);
 #endif
 
   printf(" yday=%d", tmp->tm_yday);
