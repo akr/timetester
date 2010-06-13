@@ -67,8 +67,6 @@ void do_localtime(time_t t)
 int main(int argc, char *argv[])
 {
   time_t t;
-  struct tm *tmp;
-  long long y;
   int ret;
 
   ret = timenum_parse(argv[1], &t);
