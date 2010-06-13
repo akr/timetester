@@ -1,14 +1,10 @@
 #include "timetester.h"
 
-int main(int argc, char *argv[])
+void do_localtime(time_t t)
 {
-  time_t t;
   struct tm *tmp;
   long long y;
   int ret;
-
-  ret = timenum_parse(argv[1], &t);
-  if (ret == -1) { perror("timenum_parse"); exit(1); }
 
   tmp = localtime(&t);
   if (tmp == NULL) { fprintf(stderr, "localtime error\n"); exit(1); }
@@ -50,6 +46,19 @@ int main(int argc, char *argv[])
   }
 
   printf("\n");
+}
+
+int main(int argc, char *argv[])
+{
+  time_t t;
+  struct tm *tmp;
+  long long y;
+  int ret;
+
+  ret = timenum_parse(argv[1], &t);
+  if (ret == -1) { perror("timenum_parse"); exit(1); }
+
+  do_localtime(t);
 
   return 0;
 }
