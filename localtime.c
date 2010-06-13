@@ -1,5 +1,15 @@
 #include "timetester.h"
 
+int opt_v = 0;
+
+void usage(FILE *f, int status)
+{
+  fprintf(f,
+      "usage: localtime [options] seconds-from-epoch...\n"
+      );
+  exit(status);
+}
+
 void do_localtime(time_t t)
 {
   struct tm *tmp;
@@ -66,13 +76,34 @@ void do_localtime(time_t t)
 
 int main(int argc, char *argv[])
 {
-  time_t t;
-  int ret;
+  int opt;
 
-  ret = timenum_parse(argv[1], &t);
-  if (ret == -1) { perror("timenum_parse"); exit(1); }
+  while ((opt = getopt(argc, argv, "hv")) != -1) {
+    switch (opt) {
+    case 'h':
+      usage(stdout, EXIT_SUCCESS);
 
-  do_localtime(t);
+    case 'v':
+      opt_v++;
+      break;
+
+    case '?':
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  for (; optind < argc; optind++) {
+    const char *arg = argv[optind];
+    time_t t;
+    int ret;
+
+    ret = timenum_parse(arg, &t);
+    if (ret == -1) {
+      printf("%s : %s\n", arg, strerror(errno));
+      continue;
+    }
+    do_localtime(t);
+  }
 
   return 0;
 }
