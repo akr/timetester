@@ -1,8 +1,5 @@
-#                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
-
 AC_PREREQ([2.61])
-AC_INIT([timetest], [0.1])
+AC_INIT([timetester], [0.1])
 
 AC_CONFIG_SRCDIR([README])
 AC_CONFIG_HEADERS([config.h])
