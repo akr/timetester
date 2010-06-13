@@ -70,7 +70,7 @@ void do_localtime(time_t t)
 #endif
 
 #if HAVE_DECL_TZNAME
-    printf(" tzname=\"%s\",\"%s\"", tzname[0], tzname[1]);
+    printf(" tzname=[%s,%s]", tzname[0], tzname[1]);
 #endif
 
   }
