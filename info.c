@@ -53,7 +53,7 @@ void info_dynamic(void)
      timezone function is available on Version 7 AT&T UNIX and FreeBSD 8.0. */
   {
     char buf[16];
-    ret = format_gmtoff(buf, sizeof(buf), timezone);
+    ret = format_gmtoff(buf, sizeof(buf), -timezone);
     if (0 < ret && ret < sizeof(buf))
       printf("timezone\t: %s (%d)\n", buf, (int)timezone);
     else
@@ -64,7 +64,7 @@ void info_dynamic(void)
 #if HAVE_DECL_ALTZONE
   {
     char buf[16];
-    ret = format_gmtoff(buf, sizeof(buf), altzone);
+    ret = format_gmtoff(buf, sizeof(buf), -altzone);
     if (0 < ret && ret < sizeof(buf))
       printf("altzone\t\t: %s (%d)\n", buf, (int)altzone);
     else

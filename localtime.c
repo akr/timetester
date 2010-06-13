@@ -25,6 +25,17 @@ void do_localtime(time_t t)
     else
       printf(" gmtoff=%ld", tmp->tm_gmtoff);
   }
+#elif defined(HAVE_DECL_TIMEZONE) && defined(HAVE_DECL_ALTZONE)
+  {
+    char gmtoff_buf[16];
+    time_t gmtoff = tmp->tm_isdst ? altzone : timezone;
+    gmtoff = -gmtoff;
+    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), (int)gmtoff);
+    if (0 < ret && ret < sizeof(gmtoff_buf))
+      printf(" %s", gmtoff_buf);
+    else
+      printf(" gmtoff=%"PRIdTIME, gmtoff);
+  }
 #endif
 
   printf(" %s",
