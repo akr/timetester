@@ -62,7 +62,7 @@ AC_CHECK_DECLS([tzname, timezone, daylight, altzone],,,[$incs])
 
 AC_COMPILE_IFELSE(AC_LANG_PROGRAM(
   [$incs],
-  [timezone();]),
+  [timezone(0,0);]),
   [AC_DEFINE(HAVE_FUNC_TIMEZONE, [], [Define to 1 if the function timezone() is available.])])
 
 AC_CONFIG_FILES([Makefile])

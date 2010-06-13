@@ -48,7 +48,7 @@ void info_dynamic(void)
   printf("daylight\t: %d\n", daylight);
 #endif
 
-#if HAVE_DECL_TIMEZONE && !defined(HAVE_TIMEZONE)
+#if HAVE_DECL_TIMEZONE && !defined(HAVE_FUNC_TIMEZONE)
   /* timezone variable is not exist if timezone function exists.
      timezone function is available on Version 7 AT&T UNIX and FreeBSD 8.0. */
   {
