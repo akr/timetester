@@ -10,7 +10,7 @@ void usage(FILE *f, int status)
   exit(status);
 }
 
-int print_gmtoff(int gmtoff)
+int print_gmtoff(long gmtoff)
 {
   char buf[16];
   format_gmtoff(buf, sizeof(buf), gmtoff);
@@ -62,13 +62,13 @@ void do_localtime(time_t t)
 
 #ifdef HAVE_VAR_TIMEZONE
     printf(" timezone=");
-    print_gmtoff((int)-timezone);
+    print_gmtoff(-timezone);
     printf("(%"PRIdTIME")", timezone);
 #endif
 
 #if HAVE_DECL_ALTZONE
     printf(" altzone=");
-    print_gmtoff((int)-altzone);
+    print_gmtoff(-altzone);
     printf("(%"PRIdTIME")", altzone);
 #endif
 

@@ -38,9 +38,10 @@ int timenum_parse(const char *str, time_t *res)
 #undef CONVFUN
 }
 
-int format_gmtoff(char *buf, size_t bufsize, int gmtoff)
+int format_gmtoff(char *buf, size_t bufsize, long gmtoff)
 {
-  int sign, t, h, m, s;
+  int sign, m, s;
+  long t, h;
   int ret;
   t = gmtoff;
   sign = 1;
@@ -53,9 +54,9 @@ int format_gmtoff(char *buf, size_t bufsize, int gmtoff)
   m = t % 60;
   h = t / 60;
   if (s == 0)
-    ret = snprintf(buf, bufsize, "%c%02d:%02d", sign < 0 ? '-' : '+', h, m);
+    ret = snprintf(buf, bufsize, "%c%02ld:%02d", sign < 0 ? '-' : '+', h, m);
   else
-    ret = snprintf(buf, bufsize, "%c%02d:%02d:%02d", sign < 0 ? '-' : '+', h, m, s);
+    ret = snprintf(buf, bufsize, "%c%02ld:%02d:%02d", sign < 0 ? '-' : '+', h, m, s);
   return ret;
 }
 
