@@ -73,7 +73,7 @@ void info_dynamic(void)
 #endif
 
 #if HAVE_DECL_TZNAME
-  printf("tzname\t\t: \"%s\", \"%s\"\n", tzname[0], tzname[1]);
+  printf("tzname\t\t: [%s,%s]\n", tzname[0], tzname[1]);
 #endif
 }
 
