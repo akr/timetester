@@ -13,7 +13,7 @@ void usage(FILE *f, int status)
 int print_gmtoff(long gmtoff)
 {
   char buf[16];
-  format_gmtoff(buf, sizeof(buf), gmtoff);
+  format_gmtoff(buf, sizeof(buf), gmtoff, 0);
   fputs(buf, stdout);
   return 0;
 }

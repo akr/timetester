@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 #ifdef HAVE_STRUCT_TM_TM_GMTOFF
   {
     char gmtoff_buf[16];
-    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), tmp.tm_gmtoff);
+    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), tmp.tm_gmtoff, 0);
     if (0 < ret && ret < sizeof(gmtoff_buf))
       printf(" %s", gmtoff_buf);
     else
