@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
   {
     char gmtoff_buf[16];
     time_t gmtoff = tmp.tm_isdst ? altzone : timezone;
-    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), (int)gmtoff);
+    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), (int)gmtoff, 0);
     if (0 < ret && ret < sizeof(gmtoff_buf))
       printf(" %s", gmtoff_buf);
     else
