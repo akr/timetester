@@ -18,6 +18,8 @@ int print_gmtoff(long gmtoff)
   return 0;
 }
 
+#define CHOOSE_ISDST(isdst, std, dst, unknown) ((isdst) == 0 ? (std) : (isdst) > 0 ? (dst) : (unknown))
+
 int print_wday(int wday)
 {
   char buf[16];
@@ -53,7 +55,7 @@ void do_localtime(time_t t)
 #endif
 
     printf(" tm_isdst=%s(%d)",
-      tmp->tm_isdst > 0 ? "dst" : tmp->tm_isdst == 0 ? "std" : "unknown",
+      CHOOSE_ISDST(tmp->tm_isdst, "std", "dst", "unknown"),
       tmp->tm_isdst);
 
 #if HAVE_DECL_DAYLIGHT
@@ -91,7 +93,8 @@ void do_localtime(time_t t)
 #ifdef HAVE_STRUCT_TM_TM_ZONE
     printf(" %s", tmp->tm_zone);
 #elif HAVE_DECL_TZNAME
-    printf(" %s", tzname[tmp->tm_isdst ? 1 : 0]);
+    if (0 <= tmp->tm_isdst)
+      printf(" %s", tzname[tmp->tm_isdst ? 1 : 0]);
 #endif
   }
 
