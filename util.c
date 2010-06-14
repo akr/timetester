@@ -27,6 +27,10 @@ int timenum_parse(const char *str, time_t *res)
   v = CONVFUN(str, NULL, 0);
   if (errno)
     return -1;
+  if ((time_t)v != v) {
+    errno = ERANGE;
+    return -1;
+  }
   *res = v;
   return 0;
 
