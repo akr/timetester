@@ -10,10 +10,10 @@ void usage(FILE *f, int status)
   exit(status);
 }
 
-int print_gmtoff(long gmtoff)
+int print_gmtoff(long gmtoff, int negate_sign)
 {
   char buf[16];
-  format_gmtoff(buf, sizeof(buf), gmtoff, 0);
+  format_gmtoff(buf, sizeof(buf), gmtoff, negate_sign);
   fputs(buf, stdout);
   return 0;
 }
@@ -51,7 +51,7 @@ void do_localtime(time_t t)
   if (opt_v) {
 #ifdef HAVE_STRUCT_TM_TM_GMTOFF
     putchar(' ');
-    print_gmtoff(tmp->tm_gmtoff);
+    print_gmtoff(tmp->tm_gmtoff, 0);
 #endif
 
     printf(" tm_isdst=%s(%d)",
@@ -64,13 +64,13 @@ void do_localtime(time_t t)
 
 #ifdef HAVE_VAR_TIMEZONE
     printf(" timezone=");
-    print_gmtoff(-timezone);
+    print_gmtoff(timezone, 1);
     printf("(%"PRIdTIME")", timezone);
 #endif
 
 #if HAVE_DECL_ALTZONE
     printf(" altzone=");
-    print_gmtoff(-altzone);
+    print_gmtoff(altzone, 1);
     printf("(%"PRIdTIME")", altzone);
 #endif
 
@@ -82,11 +82,11 @@ void do_localtime(time_t t)
   else {
 #ifdef HAVE_STRUCT_TM_TM_GMTOFF
     putchar(' ');
-    print_gmtoff(tmp->tm_gmtoff);
+    print_gmtoff(tmp->tm_gmtoff, 0);
 #elif defined(HAVE_VAR_TIMEZONE) && defined(HAVE_DECL_ALTZONE)
     if (0 <= tmp->tm_isdst) {
       putchar(' ');
-      print_gmtoff(tmp->tm_isdst ? -altzone : -timezone);
+      print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1);
     }
 #endif
 
