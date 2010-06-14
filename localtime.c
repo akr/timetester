@@ -93,8 +93,6 @@ void do_localtime(time_t t)
 #endif
   }
 
-  printf(" yday=%d", tmp->tm_yday);
-
   putchar(' ');
   print_wday(tmp->tm_wday);
 
