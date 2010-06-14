@@ -82,8 +82,10 @@ void do_localtime(time_t t)
     putchar(' ');
     print_gmtoff(tmp->tm_gmtoff);
 #elif defined(HAVE_VAR_TIMEZONE) && defined(HAVE_DECL_ALTZONE)
-    putchar(' ');
-    print_gmtoff(tmp->tm_isdst ? -altzone : -timezone);
+    if (0 <= tmp->tm_isdst) {
+      putchar(' ');
+      print_gmtoff(tmp->tm_isdst ? -altzone : -timezone);
+    }
 #endif
 
 #ifdef HAVE_STRUCT_TM_TM_ZONE
