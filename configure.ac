@@ -13,7 +13,7 @@ AC_USE_SYSTEM_EXTENSIONS
 # Checks for header files.
 
 AC_HEADER_TIME
-AC_CHECK_HEADERS([sys/time.h errno.h limits.h sys/limits.h])
+AC_CHECK_HEADERS([sys/time.h errno.h limits.h sys/limits.h stdarg.h])
 
 incs="AC_INCLUDES_DEFAULT
 #if TIME_WITH_SYS_TIME
@@ -35,6 +35,9 @@ incs="AC_INCLUDES_DEFAULT
 #if HAVE_SYS_LIMITS_H
 # include <sys/limits.h>
 #endif
+#if HAVE_STDARG
+# include <stdarg.h>
+#endif
 "
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -51,7 +54,7 @@ AC_MSG_CHECKING([for time_t is signed])
 AC_RUN_IFELSE(AC_LANG_PROGRAM(
   [$incs],
   [exit((~(time_t)0 <= 0) ? EXIT_SUCCESS : EXIT_FAILURE);]),
-  [AC_MSG_RESULT(yes); AC_DEFINE(TIME_IS_SIGNED, [Define to 1 if time_t is signed type.])],
+  [AC_MSG_RESULT(yes); AC_DEFINE(TIME_IS_SIGNED, [], [Define to 1 if time_t is signed type.])],
   [AC_MSG_RESULT(no)])
 
 # Checks for library functions.

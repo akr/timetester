@@ -1,5 +1,9 @@
 #include "config.h"
 
+#if HAVE_DECL_TIMEZONE && !defined(HAVE_FUNC_TIMEZONE)
+# define HAVE_VAR_TIMEZONE 1
+#endif
+
 #include <stdio.h>
 #if HAVE_SYS_TYPES_H
 # include <sys/types.h>
@@ -52,6 +56,9 @@
 #endif
 #if HAVE_SYS_LIMITS_H
 # include <sys/limits.h>
+#endif
+#if HAVE_STDARG_H
+# include <stdarg.h>
 #endif
 
 #if SIZEOF_TIME_T == SIZEOF_INT
