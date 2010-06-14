@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     tmarg.tm_hour, tmarg.tm_min, tmarg.tm_sec);
 
   printf(" %s",
-    0 < tmarg.tm_isdst ? "dst" : tmarg.tm_isdst == 0 ? "std" : "std|dst");
+    0 < tmarg.tm_isdst ? "dst" : tmarg.tm_isdst == 0 ? "std" : "std/dst");
 
   printf(" ->");
 
