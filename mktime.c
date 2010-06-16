@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
 
   printf(" %s", CHOOSE_ISDST(tmp.tm_isdst, "std", "dst", "std/dst"));
 
-  WITH_TM_ZONE(0 <= printf(" %s", tmp.tm_zone)) ||
-    WITH_TZNAME(0 <= tmp.tm_isdst && 0 <= printf(" %s", tzname[tmp.tm_isdst ? 1 : 0]));
+  WITH_TM_ZONE(putf(" %s", tmp.tm_zone)) ||
+    WITH_TZNAME(0 <= tmp.tm_isdst && putf(" %s", tzname[tmp.tm_isdst ? 1 : 0]));
 
   printf(" tm_yday=%d", tmp.tm_yday);
 

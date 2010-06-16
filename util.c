@@ -99,6 +99,16 @@ int format_wday(char *buf, size_t bufsize, int wday)
   return ret;
 }
 
+int putf(const char *format, ...)
+{
+  va_list ap;
+  int ret;
+  va_start(ap, format);
+  ret = vprintf(format, ap);
+  va_end(ap);
+  return 0 <= ret;
+}
+
 int print_gmtoff(long gmtoff, int negate_sign)
 {
   char buf[16];

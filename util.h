@@ -11,6 +11,9 @@ char *weekday_str(int wday);
 int format_wday(char *buf, size_t bufsize, int wday);
 
 /* success:1, failure:0 */
+int putf(const char *format, ...);
+
+/* success:1, failure:0 */
 int print_gmtoff(long gmtoff, int negate_sign);
 
 /* success:1, failure:0 */
