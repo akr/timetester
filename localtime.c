@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 {
   int opt;
 
-  while ((opt = mygetopt(argc, argv, "hvx:")) != -1) {
+  while ((opt = mygetopt(argc, argv, "hv")) != -1) {
     switch (opt) {
     case 'h':
       usage(stdout, EXIT_SUCCESS);
