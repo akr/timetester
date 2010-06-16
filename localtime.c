@@ -16,15 +16,15 @@ void usage(FILE *f, int status)
 void do_localtime(time_t t)
 {
   struct tm *tmp;
-  long long y;
+  signed_time_t y;
   int ret;
 
   tmp = localtime(&t);
   if (tmp == NULL) { fprintf(stderr, "localtime error\n"); exit(1); }
 
-  y = (long long)tmp->tm_year + 1900;
+  y = 1900 + (signed_time_t)tmp->tm_year;
 
-  printf("%"PRIdTIME" -> %lld-%02d-%02d %02d:%02d:%02d",
+  printf("%"PRIdTIME" -> %"PRIdSTIME"-%02d-%02d %02d:%02d:%02d",
     t,
     y, tmp->tm_mon + 1, tmp->tm_mday,
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);

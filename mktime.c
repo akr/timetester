@@ -4,7 +4,7 @@ int main(int argc, char *argv[])
 {
   time_t t;
   struct tm tmarg, tmp;
-  long long y;
+  signed_time_t y;
   int ret;
 
   if (argc <= 1) {
@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
   t = mktime(&tmp);
   if (t == (time_t)-1) { fprintf(stderr, "mktime returns -1 (error)\n"); exit(1); }
 
-  y = 1900 + (long long)tmarg.tm_year;
-  printf("%lld-%02d-%02d %02d:%02d:%02d",
+  y = 1900 + (signed_time_t)tmarg.tm_year;
+  printf("%"PRIdSTIME"-%02d-%02d %02d:%02d:%02d",
     y, tmarg.tm_mon + 1, tmarg.tm_mday,
     tmarg.tm_hour, tmarg.tm_min, tmarg.tm_sec);
 
@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
 
   printf(" %"PRIdTIME, t);
 
-  y = 1900 + (long long)tmp.tm_year;
-  printf(" %lld-%02d-%02d %02d:%02d:%02d",
+  y = 1900 + (signed_time_t)tmp.tm_year;
+  printf(" %"PRIdSTIME"-%02d-%02d %02d:%02d:%02d",
     y, tmp.tm_mon + 1, tmp.tm_mday,
     tmp.tm_hour, tmp.tm_min, tmp.tm_sec);
 
