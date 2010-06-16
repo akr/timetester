@@ -17,7 +17,7 @@ void do_localtime(time_t t)
 {
   struct tm *tmp;
   signed_time_t y;
-  int ret;
+  char *str;
 
   errno = 0;
   tmp = localtime(&t);
@@ -62,9 +62,8 @@ void do_localtime(time_t t)
       WITH_TZNAME(0 <= tmp->tm_isdst && putf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
-  printf(" (");
-  print_wday(tmp->tm_wday);
-  printf(")");
+  (str = weekday_str(tmp->tm_wday)) ? printf(" (%s)", str) :
+                                      printf(" tm_wday=%d", tmp->tm_wday);
 
   printf("\n");
 }
