@@ -5,7 +5,6 @@ int main(int argc, char *argv[])
   time_t t;
   struct tm tmarg, tmp;
   signed_time_t y;
-  int ret;
   char *str;
 
   if (argc <= 1) {
