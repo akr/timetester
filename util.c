@@ -74,7 +74,7 @@ int format_gmtoff(char *buf, size_t bufsize, long gmtoff, int negate_sign)
   return ret;
 }
 
-static char *weekday(int wday)
+char *weekday_str(int wday)
 {
   switch (wday) {
     case 0: return "Sun";
@@ -90,7 +90,7 @@ static char *weekday(int wday)
 
 int format_wday(char *buf, size_t bufsize, int wday)
 {
-  char *s = weekday(wday);
+  char *s = weekday_str(wday);
   int ret;
   if (s)
     ret = snprintf(buf, bufsize, "%s", s);

@@ -6,6 +6,7 @@ int main(int argc, char *argv[])
   struct tm tmarg, tmp;
   signed_time_t y;
   int ret;
+  char *str;
 
   if (argc <= 1) {
     fprintf(stderr, "usage: mktime year [mon [day [hour [min [sec [isdst]]]]]]\n");
@@ -52,10 +53,9 @@ int main(int argc, char *argv[])
 
   printf(" tm_yday=%d", tmp.tm_yday);
 
-  printf(" (");
-  print_wday(tmp.tm_wday);
-  printf(")");
-
+  (str = weekday_str(tmp.tm_wday)) ? printf(" (%s)", str) :
+                                     printf(" tm_wday=%d", tmp.tm_wday);
+  
   printf("\n");
 
   return 0;
