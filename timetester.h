@@ -106,17 +106,7 @@
 #define CHOOSE_ISDST(isdst, std, dst, unknown) \
   ((isdst) == 0 ? (std) : (isdst) > 0 ? (dst) : (unknown))
 
-#if SIZEOF_TIME_T == SIZEOF_INT
-  typedef int signed_time_t;
-  typedef unsigned int unsigned_time_t;
-# ifdef TIME_IS_SIGNED
-#   define PRIdTIME "d"
-# else
-#   define PRIdTIME "u"
-# endif
-# define PRIdSTIME "d"
-# define PRIdUTIME "u"
-#elif SIZEOF_TIME_T == SIZEOF_LONG
+#if SIZEOF_TIME_T == SIZEOF_LONG
   typedef long signed_time_t;
   typedef unsigned long unsigned_time_t;
 # ifdef TIME_IS_SIGNED
@@ -126,6 +116,16 @@
 # endif
 # define PRIdSTIME "ld"
 # define PRIdUTIME "lu"
+#elif SIZEOF_TIME_T == SIZEOF_INT
+  typedef int signed_time_t;
+  typedef unsigned int unsigned_time_t;
+# ifdef TIME_IS_SIGNED
+#   define PRIdTIME "d"
+# else
+#   define PRIdTIME "u"
+# endif
+# define PRIdSTIME "d"
+# define PRIdUTIME "u"
 #elif SIZEOF_TIME_T == SIZEOF_LONG_LONG
   typedef long long signed_time_t;
   typedef unsigned long long unsigned_time_t;
