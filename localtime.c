@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
 {
   int opt;
   getopt_t g;
+  int i;
 
   getopt_init(&g, argc, argv, "hv");
   while ((opt = getopt_next(&g)) != -1) {
@@ -84,8 +85,8 @@ int main(int argc, char *argv[])
     }
   }
 
-  for (; g.optind < argc; g.optind++) {
-    const char *arg = argv[g.optind];
+  for (i = g.optind; i < argc; i++) {
+    const char *arg = argv[i];
     time_t t;
     int ret;
 
