@@ -12,3 +12,11 @@ int print_gmtoff(long gmtoff, int negate_sign);
 
 /* success:1, failure:0 */
 int print_wday(int wday);
+
+extern char *myoptarg;
+extern int myoptind;
+extern int myopterr;
+extern int myoptopt;
+int mygetopt(int argc, char * const argv[], const char *optstring);
+
+

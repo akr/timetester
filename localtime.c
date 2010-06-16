@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 {
   int opt;
 
-  while ((opt = getopt(argc, argv, "hv")) != -1) {
+  while ((opt = mygetopt(argc, argv, "hvx:")) != -1) {
     switch (opt) {
     case 'h':
       usage(stdout, EXIT_SUCCESS);
@@ -82,8 +82,8 @@ int main(int argc, char *argv[])
     }
   }
 
-  for (; optind < argc; optind++) {
-    const char *arg = argv[optind];
+  for (; myoptind < argc; myoptind++) {
+    const char *arg = argv[myoptind];
     time_t t;
     int ret;
 

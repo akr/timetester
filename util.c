@@ -113,3 +113,82 @@ int print_wday(int wday)
   return 0;
 }
 
+char *myoptarg;
+int myoptind = 1;
+int myopterr = 1;
+int myoptopt;
+static int myoptsubind = 0;
+
+int mygetopt(int argc, char * const argv[], const char *optstring)
+{
+  int opt;
+  const char *p;
+
+  if (myoptsubind == 0) {
+    if (argv[myoptind] == NULL)
+      return -1;
+
+    if (argv[myoptind][0] != '-')
+      return -1;
+
+    if (argv[myoptind][1] == '\0')
+      return -1;
+
+    if (argv[myoptind][1] == '-' && argv[myoptind][2] == '\0') {
+      myoptind++;
+      return -1;
+    }
+
+    myoptsubind = 1;
+  }
+
+  opt = (unsigned char)argv[myoptind][myoptsubind];
+
+  if (!isalpha(opt)) {
+    if (myopterr)
+      fprintf(stderr, "%s: invalid option -- %c\n", argv[0], opt);
+    return '?';
+  }
+
+  p = strchr(optstring, opt);
+  if (!p) {
+    if (myopterr)
+      fprintf(stderr, "%s: invalid option -- %c\n", argv[0], opt);
+    return '?';
+  }
+
+  if (p[1] == ':') {
+    if (argv[myoptind][myoptsubind+1] != '\0') {
+      myoptarg = &argv[myoptind][myoptsubind+1];
+      myoptind++;
+      myoptsubind = 0;
+      return opt;
+    }
+    else {
+      if (!argv[myoptind+1]) {
+        myoptopt = opt;
+        if (*optstring == ':')
+          return ':';
+        else {
+          if (myopterr)
+            fprintf(stderr, "%s: option requires an argument -- %c\n", argv[0], opt);
+          return '?';
+        }
+      }
+      myoptarg = argv[myoptind+1];
+      myoptind += 2;
+      myoptsubind = 0;
+      return opt;
+    }
+  }
+  else {
+    if (argv[myoptind][myoptsubind+1] == '\0') {
+      myoptind++;
+      myoptsubind = 0;
+    }
+    else {
+      myoptsubind++;
+    }
+    return opt;
+  }
+}
