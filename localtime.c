@@ -34,24 +34,24 @@ void do_localtime(time_t t)
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
 
   if (opt_v) {
-    WITH_TM_GMTOFF(putchar(' '));
-    WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0));
+    (void)WITH_TM_GMTOFF(putchar(' '));
+    (void)WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0));
 
     printf(" tm_isdst=%s(%d)",
       CHOOSE_ISDST(tmp->tm_isdst, "std", "dst", "unknown"),
       tmp->tm_isdst);
 
-    WITH_DAYLIGHT(printf(" daylight=%d", daylight));
+    (void)WITH_DAYLIGHT(printf(" daylight=%d", daylight));
 
-    WITH_TIMEZONE(printf(" timezone="));
-    WITH_TIMEZONE(print_gmtoff(timezone, 1));
-    WITH_TIMEZONE(printf("(%"PRIdTIME")", timezone));
+    (void)WITH_TIMEZONE(printf(" timezone="));
+    (void)WITH_TIMEZONE(print_gmtoff(timezone, 1));
+    (void)WITH_TIMEZONE(printf("(%"PRIdTIME")", timezone));
 
-    WITH_ALTZONE(printf(" altzone="));
-    WITH_ALTZONE(print_gmtoff(altzone, 1));
-    WITH_ALTZONE(printf("(%"PRIdTIME")", altzone));
+    (void)WITH_ALTZONE(printf(" altzone="));
+    (void)WITH_ALTZONE(print_gmtoff(altzone, 1));
+    (void)WITH_ALTZONE(printf("(%"PRIdTIME")", altzone));
 
-    WITH_TZNAME(printf(" tzname=[%s,%s]", tzname[0], tzname[1]));
+    (void)WITH_TZNAME(printf(" tzname=[%s,%s]", tzname[0], tzname[1]));
   }
   else {
     (void)((WITH_TM_GMTOFF(1) || WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst)) && putchar(' '));
