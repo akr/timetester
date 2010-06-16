@@ -42,8 +42,6 @@ void info_static(void)
 
 void info_dynamic(void)
 {
-  int ret;
-
 #if HAVE_DECL_DAYLIGHT
   printf("daylight\t: %d\n", daylight);
 #endif
@@ -52,6 +50,7 @@ void info_dynamic(void)
   /* timezone variable is not exist if timezone function exists.
      timezone function is available on Version 7 AT&T UNIX and FreeBSD 8.0. */
   {
+    int ret;
     char buf[16];
     ret = format_gmtoff(buf, sizeof(buf), -timezone, 0);
     if (0 < ret && ret < (int)sizeof(buf))
@@ -63,6 +62,7 @@ void info_dynamic(void)
 
 #if HAVE_DECL_ALTZONE
   {
+    int ret;
     char buf[16];
     ret = format_gmtoff(buf, sizeof(buf), -altzone, 0);
     if (0 < ret && ret < sizeof(buf))
