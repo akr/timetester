@@ -19,8 +19,12 @@ void do_localtime(time_t t)
   signed_time_t y;
   int ret;
 
+  errno = 0;
   tmp = localtime(&t);
-  if (tmp == NULL) { fprintf(stderr, "localtime error\n"); exit(1); }
+  if (tmp == NULL) {
+    printf("%"PRIdTIME" : localtime: %s\n", t, strerror(errno));
+    return;
+  }
 
   y = 1900 + (signed_time_t)tmp->tm_year;
 
@@ -92,7 +96,7 @@ int main(int argc, char *argv[])
 
     ret = timenum_parse(arg, &t);
     if (ret == -1) {
-      printf("%s : %s\n", arg, strerror(errno));
+      printf("%s : string-to-time_t: %s\n", arg, strerror(errno));
       continue;
     }
     do_localtime(t);
