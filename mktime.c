@@ -50,8 +50,7 @@ int main(int argc, char *argv[])
   WITH_TM_ZONE(0 <= printf(" %s", tmp.tm_zone)) ||
     WITH_TZNAME(0 <= tmp.tm_isdst && 0 <= printf(" %s", tzname[tmp.tm_isdst ? 1 : 0]));
 
-  printf(" yday=%d",
-    tmp.tm_yday);
+  printf(" tm_yday=%d", tmp.tm_yday);
 
   putchar(' ');
   print_wday(tmp.tm_wday);
