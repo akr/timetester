@@ -79,6 +79,9 @@ void info_dynamic(void)
 
 int main(int argc, char *argv[])
 {
+  (void)argc;
+  (void)argv;
+
   info_static();
 
   tzset();
