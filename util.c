@@ -122,7 +122,7 @@ int print_wday(int wday)
   char buf[16];
   int ret;
   ret = format_wday(buf, sizeof(buf), wday);
-  if (0 < ret && ret < sizeof(buf))
+  if (0 < ret && ret < (int)sizeof(buf))
     printf("%s", buf);
   else
     printf("wday=%d", wday);
