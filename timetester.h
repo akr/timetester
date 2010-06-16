@@ -103,6 +103,9 @@
 # define WITH_TZNAME(x) 0
 #endif
 
+#define CHOOSE_ISDST(isdst, std, dst, unknown) \
+  ((isdst) == 0 ? (std) : (isdst) > 0 ? (dst) : (unknown))
+
 #if SIZEOF_TIME_T == SIZEOF_INT
   typedef unsigned int unsigned_time_t;
 # ifdef TIME_IS_SIGNED

@@ -13,28 +13,6 @@ void usage(FILE *f, int status)
   exit(status);
 }
 
-int print_gmtoff(long gmtoff, int negate_sign)
-{
-  char buf[16];
-  format_gmtoff(buf, sizeof(buf), gmtoff, negate_sign);
-  fputs(buf, stdout);
-  return 0;
-}
-
-#define CHOOSE_ISDST(isdst, std, dst, unknown) ((isdst) == 0 ? (std) : (isdst) > 0 ? (dst) : (unknown))
-
-int print_wday(int wday)
-{
-  char buf[16];
-  int ret;
-  ret = format_wday(buf, sizeof(buf), wday);
-  if (0 < ret && ret < sizeof(buf))
-    printf("%s", buf);
-  else
-    printf("wday=%d", wday);
-  return 0;
-}
-
 void do_localtime(time_t t)
 {
   struct tm *tmp;

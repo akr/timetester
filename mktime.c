@@ -30,8 +30,7 @@ int main(int argc, char *argv[])
     y, tmarg.tm_mon + 1, tmarg.tm_mday,
     tmarg.tm_hour, tmarg.tm_min, tmarg.tm_sec);
 
-  printf(" %s",
-    0 < tmarg.tm_isdst ? "dst" : tmarg.tm_isdst == 0 ? "std" : "std/dst");
+  printf(" %s", CHOOSE_ISDST(tmarg.tm_isdst, "std", "dst", "std/dst"));
 
   printf(" ->");
 
@@ -42,47 +41,20 @@ int main(int argc, char *argv[])
     y, tmp.tm_mon + 1, tmp.tm_mday,
     tmp.tm_hour, tmp.tm_min, tmp.tm_sec);
 
-#ifdef HAVE_STRUCT_TM_TM_GMTOFF
-  {
-    char gmtoff_buf[16];
-    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), tmp.tm_gmtoff, 0);
-    if (0 < ret && ret < sizeof(gmtoff_buf))
-      printf(" %s", gmtoff_buf);
-    else
-      printf(" gmtoff=%ld", tmp.tm_gmtoff);
-  }
-#elif defined(HAVE_DECL_TIMEZONE) && defined(HAVE_DECL_ALTZONE)
-  {
-    char gmtoff_buf[16];
-    time_t gmtoff = tmp.tm_isdst ? altzone : timezone;
-    ret = format_gmtoff(gmtoff_buf, sizeof(gmtoff_buf), (int)gmtoff, 0);
-    if (0 < ret && ret < sizeof(gmtoff_buf))
-      printf(" %s", gmtoff_buf);
-    else
-      printf(" gmtoff=%"PRIdTIME, gmtoff);
-  }
-#endif
+  (WITH_TM_GMTOFF(1) || WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst)) && putchar(' ');
+  WITH_TM_GMTOFF(print_gmtoff(tmp.tm_gmtoff, 0)) ||
+    WITH_TIMEZONE_ALTZONE(0 <= tmp.tm_isdst && print_gmtoff(tmp.tm_isdst ? altzone : timezone, 1));
 
-  printf(" %s",
-    0 < tmp.tm_isdst ? "dst" : tmp.tm_isdst == 0 ? "std" : "std|dst");
+  printf(" %s", CHOOSE_ISDST(tmp.tm_isdst, "std", "dst", "std/dst"));
 
-#ifdef HAVE_STRUCT_TM_TM_ZONE
-  printf(" (%s)", tmp.tm_zone);
-#elif defined(HAVE_DECL_TZNAME)
-  printf(" (%s)", 0 < tmp.tm_isdst ? tzname[1] : tmp.tm_isdst == 0 ? tzname[0] : "invalid-isdst");
-#endif
+  WITH_TM_ZONE(0 <= printf(" %s", tmp.tm_zone)) ||
+    WITH_TZNAME(0 <= tmp.tm_isdst && 0 <= printf(" %s", tzname[tmp.tm_isdst ? 1 : 0]));
 
   printf(" yday=%d",
     tmp.tm_yday);
 
-  {
-    char buf[16];
-    ret = format_wday(buf, sizeof(buf), tmp.tm_wday);
-    if (0 < ret && ret < sizeof(buf))
-      printf(" %s", buf);
-    else
-      printf(" wday=%d", tmp.tm_wday);
-  }
+  putchar(' ');
+  print_wday(tmp.tm_wday);
 
   printf("\n");
 
