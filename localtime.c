@@ -49,53 +49,32 @@ void do_localtime(time_t t)
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
 
   if (opt_v) {
-#ifdef HAVE_STRUCT_TM_TM_GMTOFF
-    putchar(' ');
-    print_gmtoff(tmp->tm_gmtoff, 0);
-#endif
+    WITH_TM_GMTOFF(putchar(' '));
+    WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0));
 
     printf(" tm_isdst=%s(%d)",
       CHOOSE_ISDST(tmp->tm_isdst, "std", "dst", "unknown"),
       tmp->tm_isdst);
 
-#if HAVE_DECL_DAYLIGHT
-    printf(" daylight=%d", daylight);
-#endif
+    WITH_DAYLIGHT(printf(" daylight=%d", daylight));
 
-#ifdef HAVE_VAR_TIMEZONE
-    printf(" timezone=");
-    print_gmtoff(timezone, 1);
-    printf("(%"PRIdTIME")", timezone);
-#endif
+    WITH_TIMEZONE(printf(" timezone="));
+    WITH_TIMEZONE(print_gmtoff(timezone, 1));
+    WITH_TIMEZONE(printf("(%"PRIdTIME")", timezone));
 
-#if HAVE_DECL_ALTZONE
-    printf(" altzone=");
-    print_gmtoff(altzone, 1);
-    printf("(%"PRIdTIME")", altzone);
-#endif
+    WITH_ALTZONE(printf(" altzone="));
+    WITH_ALTZONE(print_gmtoff(altzone, 1));
+    WITH_ALTZONE(printf("(%"PRIdTIME")", altzone));
 
-#if HAVE_DECL_TZNAME
-    printf(" tzname=[%s,%s]", tzname[0], tzname[1]);
-#endif
-
+    WITH_TZNAME(printf(" tzname=[%s,%s]", tzname[0], tzname[1]));
   }
   else {
-#ifdef HAVE_STRUCT_TM_TM_GMTOFF
-    putchar(' ');
-    print_gmtoff(tmp->tm_gmtoff, 0);
-#elif defined(HAVE_VAR_TIMEZONE) && defined(HAVE_DECL_ALTZONE)
-    if (0 <= tmp->tm_isdst) {
-      putchar(' ');
-      print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1);
-    }
-#endif
+    (WITH_TM_GMTOFF(1) || WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst)) && putchar(' ');
+    WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)) ||
+      WITH_TIMEZONE_ALTZONE((0 <= tmp->tm_isdst) && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1));
 
-#ifdef HAVE_STRUCT_TM_TM_ZONE
-    printf(" %s", tmp->tm_zone);
-#elif HAVE_DECL_TZNAME
-    if (0 <= tmp->tm_isdst)
-      printf(" %s", tzname[tmp->tm_isdst ? 1 : 0]);
-#endif
+    WITH_TM_ZONE(printf(" %s", tmp->tm_zone)) ||
+      WITH_TZNAME((0 <= tmp->tm_isdst) && printf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
   putchar(' ');
