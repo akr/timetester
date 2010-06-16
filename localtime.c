@@ -6,6 +6,9 @@ void usage(FILE *f, int status)
 {
   fprintf(f,
       "usage: localtime [options] seconds-from-epoch...\n"
+      "options:\n"
+      "  -h : print this message\n"
+      "  -v : verbose mode\n"
       );
   exit(status);
 }
