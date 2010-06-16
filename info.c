@@ -54,7 +54,7 @@ void info_dynamic(void)
   {
     char buf[16];
     ret = format_gmtoff(buf, sizeof(buf), -timezone, 0);
-    if (0 < ret && ret < sizeof(buf))
+    if (0 < ret && ret < (int)sizeof(buf))
       printf("timezone\t: %s (%d)\n", buf, (int)timezone);
     else
       printf("timezone\t: %d\n", (int)timezone);
