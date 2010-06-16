@@ -13,10 +13,19 @@ int print_gmtoff(long gmtoff, int negate_sign);
 /* success:1, failure:0 */
 int print_wday(int wday);
 
-extern char *myoptarg;
-extern int myoptind;
-extern int myopterr;
-extern int myoptopt;
-int mygetopt(int argc, char * const argv[], const char *optstring);
+typedef struct
+{
+  int argc;
+  char * const *argv;
+  const char *optstring;
 
+  char *optarg;
+  int optind;
+  int opterr;
+  int optopt;
+  int optsubind;
+} getopt_t;
+
+void getopt_init(getopt_t *, int argc, char * const argv[], const char *optstring);
+int getopt_next(getopt_t *);
 

@@ -67,8 +67,10 @@ void do_localtime(time_t t)
 int main(int argc, char *argv[])
 {
   int opt;
+  getopt_t g;
 
-  while ((opt = mygetopt(argc, argv, "hv")) != -1) {
+  getopt_init(&g, argc, argv, "hv");
+  while ((opt = getopt_next(&g)) != -1) {
     switch (opt) {
     case 'h':
       usage(stdout, EXIT_SUCCESS);
@@ -82,8 +84,8 @@ int main(int argc, char *argv[])
     }
   }
 
-  for (; myoptind < argc; myoptind++) {
-    const char *arg = argv[myoptind];
+  for (; g.optind < argc; g.optind++) {
+    const char *arg = argv[g.optind];
     time_t t;
     int ret;
 

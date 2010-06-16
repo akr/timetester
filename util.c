@@ -119,84 +119,91 @@ int print_wday(int wday)
   return 0;
 }
 
-char *myoptarg;
-int myoptind = 1;
-int myopterr = 1;
-int myoptopt;
-static int myoptsubind = 0;
+void getopt_init(getopt_t *g, int argc, char * const argv[], const char *optstring)
+{
+  g->argc = argc;
+  g->argv = argv;
+  g->optstring = optstring;
 
-int mygetopt(int argc, char * const argv[], const char *optstring)
+  g->optarg = NULL;
+  g->optind = 1;
+  g->opterr = 1;
+  g->optopt = 0;
+  g->optsubind = 0;
+}
+
+int getopt_next(getopt_t *g)
 {
   int opt;
   const char *p;
 
-  if (myoptsubind == 0) {
-    if (argv[myoptind] == NULL)
+  if (g->optsubind == 0) {
+    if (g->argv[g->optind] == NULL)
       return -1;
 
-    if (argv[myoptind][0] != '-')
+    if (g->argv[g->optind][0] != '-')
       return -1;
 
-    if (argv[myoptind][1] == '\0')
+    if (g->argv[g->optind][1] == '\0')
       return -1;
 
-    if (isdigit(argv[myoptind][1]))
+    if (isdigit(g->argv[g->optind][1]))
       return -1;
 
-    if (argv[myoptind][1] == '-' && argv[myoptind][2] == '\0') {
-      myoptind++;
+    if (g->argv[g->optind][1] == '-' && g->argv[g->optind][2] == '\0') {
+      g->optind++;
       return -1;
     }
 
-    myoptsubind = 1;
+    g->optsubind = 1;
   }
 
-  opt = (unsigned char)argv[myoptind][myoptsubind];
+  opt = (unsigned char)g->argv[g->optind][g->optsubind];
 
   if (!isalpha(opt)) {
-    if (myopterr)
-      fprintf(stderr, "%s: invalid option -- %c\n", argv[0], opt);
+    if (g->opterr)
+      fprintf(stderr, "%s: invalid option -- %c\n", g->argv[0], opt);
     return '?';
   }
 
-  p = strchr(optstring, opt);
+  p = strchr(g->optstring, opt);
   if (!p) {
-    if (myopterr)
-      fprintf(stderr, "%s: invalid option -- %c\n", argv[0], opt);
+    if (g->opterr)
+      fprintf(stderr, "%s: invalid option -- %c\n", g->argv[0], opt);
     return '?';
   }
 
   if (p[1] == ':') {
-    if (argv[myoptind][myoptsubind+1] != '\0') {
-      myoptarg = &argv[myoptind][myoptsubind+1];
-      myoptind++;
-      myoptsubind = 0;
+    if (g->argv[g->optind][g->optsubind+1] != '\0') {
+      g->optarg = &g->argv[g->optind][g->optsubind+1];
+      g->optind++;
+      g->optsubind = 0;
       return opt;
     }
     else {
-      if (!argv[myoptind+1]) {
-        myoptopt = opt;
-        if (*optstring == ':')
+      if (!g->argv[g->optind+1]) {
+        g->optopt = opt;
+        if (*g->optstring == ':')
           return ':';
         else {
-          if (myopterr)
-            fprintf(stderr, "%s: option requires an argument -- %c\n", argv[0], opt);
+          if (g->opterr)
+            fprintf(stderr, "%s: option requires an argument -- %c\n", g->argv[0], opt);
           return '?';
         }
       }
-      myoptarg = argv[myoptind+1];
-      myoptind += 2;
-      myoptsubind = 0;
+      g->optarg = g->argv[g->optind+1];
+      g->optind += 2;
+      g->optsubind = 0;
       return opt;
     }
   }
   else {
-    if (argv[myoptind][myoptsubind+1] == '\0') {
-      myoptind++;
-      myoptsubind = 0;
+    if (g->argv[g->optind][g->optsubind+1] == '\0') {
+      g->optind++;
+      g->optsubind = 0;
     }
     else {
-      myoptsubind++;
+      g->optsubind++;
     }
     return opt;
   }
