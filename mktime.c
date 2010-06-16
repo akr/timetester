@@ -52,8 +52,9 @@ int main(int argc, char *argv[])
 
   printf(" tm_yday=%d", tmp.tm_yday);
 
-  putchar(' ');
+  printf(" (");
   print_wday(tmp.tm_wday);
+  printf(")");
 
   printf("\n");
 

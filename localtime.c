@@ -62,8 +62,9 @@ void do_localtime(time_t t)
       WITH_TZNAME(0 <= tmp->tm_isdst && 0 <= printf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
-  putchar(' ');
+  printf(" (");
   print_wday(tmp->tm_wday);
+  printf(")");
 
   printf("\n");
 }
