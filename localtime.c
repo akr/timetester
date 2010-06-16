@@ -76,8 +76,8 @@ void do_localtime(time_t t)
     WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)) ||
       WITH_TIMEZONE_ALTZONE((0 <= tmp->tm_isdst) && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1));
 
-    WITH_TM_ZONE(printf(" %s", tmp->tm_zone)) ||
-      WITH_TZNAME((0 <= tmp->tm_isdst) && printf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
+    WITH_TM_ZONE(0 <= printf(" %s", tmp->tm_zone)) ||
+      WITH_TZNAME(0 <= tmp->tm_isdst && 0 <= printf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
   putchar(' ');
