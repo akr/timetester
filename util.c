@@ -23,14 +23,20 @@ int timenum_parse(const char *str, time_t *res)
 #endif
 
   CONVTYPE v;
+  char *e;
   errno = 0;
-  v = CONVFUN(str, NULL, 0);
+  v = CONVFUN(str, &e, 0);
   if (errno)
     return -1;
   if ((time_t)v != v) {
     errno = ERANGE;
     return -1;
   }
+  if (*e != '\0') {
+    errno = EINVAL;
+    return -1;
+  }
+
   *res = v;
   return 0;
 
