@@ -134,6 +134,9 @@ int mygetopt(int argc, char * const argv[], const char *optstring)
     if (argv[myoptind][1] == '\0')
       return -1;
 
+    if (isdigit(argv[myoptind][1]))
+      return -1;
+
     if (argv[myoptind][1] == '-' && argv[myoptind][2] == '\0') {
       myoptind++;
       return -1;
