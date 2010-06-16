@@ -60,6 +60,7 @@
 #if HAVE_STDARG_H
 # include <stdarg.h>
 #endif
+#include <ctype.h>
 
 #ifdef HAVE_STRUCT_TM_TM_GMTOFF
 # define WITH_TM_GMTOFF(x) (x)

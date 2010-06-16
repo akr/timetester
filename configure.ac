@@ -38,6 +38,7 @@ incs="AC_INCLUDES_DEFAULT
 #if HAVE_STDARG
 # include <stdarg.h>
 #endif
+#include <ctype.h>
 "
 
 # Checks for typedefs, structures, and compiler characteristics.
