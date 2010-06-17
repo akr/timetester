@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     y, tmp.tm_mon + 1, tmp.tm_mday,
     tmp.tm_hour, tmp.tm_min, tmp.tm_sec);
 
-  (void)((WITH_TM_GMTOFF(1) || WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst)) && putchar(' '));
+  (void)((WITH_TM_GMTOFF(1) || WITH_TIMEZONE_ALTZONE(0 <= tmp.tm_isdst)) && putchar(' '));
   (void)(WITH_TM_GMTOFF(print_gmtoff(tmp.tm_gmtoff, 0)) ||
       WITH_TIMEZONE_ALTZONE(0 <= tmp.tm_isdst && print_gmtoff(tmp.tm_isdst ? altzone : timezone, 1)));
 

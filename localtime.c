@@ -1,6 +1,7 @@
 #include "timetester.h"
 
 int opt_v = 0;
+int opt_r = 0;
 
 void usage(FILE *f, int status)
 {
@@ -9,18 +10,22 @@ void usage(FILE *f, int status)
       "options:\n"
       "  -h : print this message\n"
       "  -v : verbose mode\n"
+      "  -r : use localtime_r() instead of localtime()\n"
       );
   exit(status);
 }
 
 void do_localtime(time_t t)
 {
-  struct tm *tmp;
+  struct tm *tmp, result;
   signed_time_t y;
   char *str;
 
   errno = 0;
-  tmp = localtime(&t);
+  if (opt_r)
+    tmp = localtime_r(&t, &result);
+  else
+    tmp = localtime(&t);
   if (tmp == NULL) {
     printf("%"PRIdTIME" : localtime: %s\n", t, strerror(errno));
     return;
@@ -58,6 +63,11 @@ void do_localtime(time_t t)
     (void)(WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)) ||
         WITH_TIMEZONE_ALTZONE((0 <= tmp->tm_isdst) && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1)));
 
+    if (WITH_TM_GMTOFF(putf(" ")))
+      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && putf(" "));
+    if (!WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)))
+      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1));
+
     (void)(WITH_TM_ZONE(putf(" %s", tmp->tm_zone)) ||
         WITH_TZNAME(0 <= tmp->tm_isdst && putf(" %s", tzname[tmp->tm_isdst ? 1 : 0])));
   }
@@ -74,7 +84,7 @@ int main(int argc, char *argv[])
   getopt_t g;
   int i;
 
-  getopt_init(&g, argc, argv, "hv");
+  getopt_init(&g, argc, argv, "hvr");
   while ((opt = getopt_next(&g)) != -1) {
     switch (opt) {
     case 'h':
@@ -82,6 +92,10 @@ int main(int argc, char *argv[])
 
     case 'v':
       opt_v++;
+      break;
+
+    case 'r':
+      opt_r++;
       break;
 
     case '?':
