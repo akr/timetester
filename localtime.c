@@ -61,17 +61,13 @@ void do_localtime(time_t t)
     (void)WITH_DAYLIGHT(printf(" daylight=%d", daylight));
   }
   else {
-    (void)((WITH_TM_GMTOFF(1) || WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst)) && putchar(' '));
-    (void)(WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)) ||
-        WITH_TIMEZONE_ALTZONE((0 <= tmp->tm_isdst) && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1)));
-
     if (WITH_TM_GMTOFF(putf(" ")))
-      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && putf(" "));
+      (void)WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && putf(" "));
     if (!WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)))
-      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1));
+      (void)WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1));
 
-    (void)(WITH_TM_ZONE(putf(" %s", tmp->tm_zone)) ||
-        WITH_TZNAME(0 <= tmp->tm_isdst && putf(" %s", tzname[tmp->tm_isdst ? 1 : 0])));
+    if (!WITH_TM_ZONE(putf(" %s", tmp->tm_zone)))
+        (void)WITH_TZNAME(0 <= tmp->tm_isdst && putf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
   (str = weekday_str(tmp->tm_wday)) ? printf(" (%s)", str) :
