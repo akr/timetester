@@ -46,8 +46,6 @@ void do_localtime(time_t t)
       CHOOSE_ISDST(tmp->tm_isdst, "std", "dst", "unknown"),
       tmp->tm_isdst);
 
-    (void)WITH_DAYLIGHT(printf(" daylight=%d", daylight));
-
     (void)WITH_TIMEZONE(printf(" timezone="));
     (void)WITH_TIMEZONE(print_gmtoff(timezone, 1));
     (void)WITH_TIMEZONE(printf("(%"PRIdTIME")", timezone));
@@ -59,6 +57,8 @@ void do_localtime(time_t t)
     (void)WITH_TM_ZONE(putf(" tm_zone=%s", tmp->tm_zone));
 
     (void)WITH_TZNAME(printf(" tzname=[%s,%s]", tzname[0], tzname[1]));
+
+    (void)WITH_DAYLIGHT(printf(" daylight=%d", daylight));
   }
   else {
     (void)((WITH_TM_GMTOFF(1) || WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst)) && putchar(' '));
