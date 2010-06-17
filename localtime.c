@@ -56,6 +56,8 @@ void do_localtime(time_t t)
     (void)WITH_ALTZONE(print_gmtoff(altzone, 1));
     (void)WITH_ALTZONE(printf("(%"PRIdTIME")", altzone));
 
+    (void)WITH_TM_ZONE(putf(" tm_zone=%s", tmp->tm_zone));
+
     (void)WITH_TZNAME(printf(" tzname=[%s,%s]", tzname[0], tzname[1]));
   }
   else {
