@@ -61,7 +61,7 @@ void do_localtime(time_t t)
     (void)WITH_DAYLIGHT(printf(" daylight=%d", daylight));
   }
   else {
-    if (WITH_TM_GMTOFF(putf(" ")))
+    if (!WITH_TM_GMTOFF(putf(" ")))
       (void)WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && putf(" "));
     if (!WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)))
       (void)WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1));
