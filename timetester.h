@@ -138,17 +138,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CHOOSE_ISDST(isdst, std, dst, unknown) \
   ((isdst) == 0 ? (std) : (isdst) > 0 ? (dst) : (unknown))
 
-#if SIZEOF_TIME_T == SIZEOF_LONG
-  typedef long signed_time_t;
-  typedef unsigned long unsigned_time_t;
-# ifdef TIME_IS_SIGNED
-#   define PRIdTIME "ld"
-# else
-#   define PRIdTIME "lu"
-# endif
-# define PRIdSTIME "ld"
-# define PRIdUTIME "lu"
-#elif SIZEOF_TIME_T == SIZEOF_INT
+#if SIZEOF_TIME_T == SIZEOF_INT && SIZEOF_INT == SIZEOF_LONG && defined(__FreeBSD__)
+# define PREFER_INT_TIME_T
+#endif
+
+#if SIZEOF_TIME_T == SIZEOF_INT && defined(PREFER_INT_TIME_T)
   typedef int signed_time_t;
   typedef unsigned int unsigned_time_t;
 # ifdef TIME_IS_SIGNED
@@ -158,6 +152,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # endif
 # define PRIdSTIME "d"
 # define PRIdUTIME "u"
+#elif SIZEOF_TIME_T == SIZEOF_LONG
+  typedef long signed_time_t;
+  typedef unsigned long unsigned_time_t;
+# ifdef TIME_IS_SIGNED
+#   define PRIdTIME "ld"
+# else
+#   define PRIdTIME "lu"
+# endif
+# define PRIdSTIME "ld"
+# define PRIdUTIME "lu"
 #elif SIZEOF_TIME_T == SIZEOF_LONG_LONG
   typedef long long signed_time_t;
   typedef unsigned long long unsigned_time_t;
