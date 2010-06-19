@@ -170,6 +170,16 @@ int print_wday(int wday)
   return fprint_wday(stdout, wday);
 }
 
+int zero()
+{
+  return 0;
+}
+
+int one()
+{
+  return 1;
+}
+
 void getopt_init(getopt_t *g, int argc, char * const argv[], const char *optstring)
 {
   g->argc = argc;

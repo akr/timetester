@@ -96,43 +96,43 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef HAVE_STRUCT_TM_TM_GMTOFF
 # define WITH_TM_GMTOFF(x) (x)
 #else
-# define WITH_TM_GMTOFF(x) 0
+# define WITH_TM_GMTOFF(x) (zero())
 #endif
 
 #ifdef HAVE_STRUCT_TM_TM_ZONE
 # define WITH_TM_ZONE(x) (x)
 #else
-# define WITH_TM_ZONE(x) 0
+# define WITH_TM_ZONE(x) (zero())
 #endif
 
 #if HAVE_DECL_DAYLIGHT
 # define WITH_DAYLIGHT(x) (x)
 #else
-# define WITH_DAYLIGHT(x) 0
+# define WITH_DAYLIGHT(x) (zero())
 #endif
 
 #if defined(HAVE_VAR_TIMEZONE) && HAVE_DECL_ALTZONE
 # define WITH_TIMEZONE_ALTZONE(x) (x)
 #else
-# define WITH_TIMEZONE_ALTZONE(x) 0
+# define WITH_TIMEZONE_ALTZONE(x) (zero())
 #endif
 
 #if defined(HAVE_VAR_TIMEZONE)
 # define WITH_TIMEZONE(x) (x)
 #else
-# define WITH_TIMEZONE(x) 0
+# define WITH_TIMEZONE(x) (zero())
 #endif
 
 #if HAVE_DECL_ALTZONE
 # define WITH_ALTZONE(x) (x)
 #else
-# define WITH_ALTZONE(x) 0
+# define WITH_ALTZONE(x) (zero())
 #endif
 
 #if HAVE_DECL_TZNAME
 # define WITH_TZNAME(x) (x)
 #else
-# define WITH_TZNAME(x) 0
+# define WITH_TZNAME(x) (zero())
 #endif
 
 #define CHOOSE_ISDST(isdst, std, dst, unknown) \

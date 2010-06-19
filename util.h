@@ -52,6 +52,9 @@ int fprint_gmtoff(FILE *f, long gmtoff, int negate_sign);
 int print_wday(int wday);
 int fprint_wday(FILE *f, int wday);
 
+int zero();
+int one();
+
 typedef struct
 {
   int argc;
