@@ -114,13 +114,14 @@ void do_localtime(time_t t)
     WITH_DAYLIGHT(pf(" daylight=%d", daylight));
   }
   else {
-    if (!WITH_TM_GMTOFF(ps(" ")))
-      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && ps(" "));
-    if (!WITH_TM_GMTOFF(po(tmp->tm_gmtoff, 0)))
-      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && po(tmp->tm_isdst ? altzone : timezone, 1));
+    if (WITH_TM_GMTOFF(1))
+    { ps(" "); WITH_TM_GMTOFF(po(tmp->tm_gmtoff, 0)); }
+    else if (WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst))
+    { ps(" "); WITH_TIMEZONE_ALTZONE(po(tmp->tm_isdst ? altzone : timezone, 1)); }
 
     if (!WITH_TM_ZONE(pf(" %s", tmp->tm_zone)))
-        WITH_TZNAME(0 <= tmp->tm_isdst && pf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
+      if (0 <= tmp->tm_isdst)
+	WITH_TZNAME(pf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
   (str = weekday_str(tmp->tm_wday)) ? pf(" (%s)", str) :
