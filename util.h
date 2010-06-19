@@ -15,9 +15,11 @@ int putf(const char *format, ...);
 
 /* success:1, failure:0 */
 int print_gmtoff(long gmtoff, int negate_sign);
+int fprint_gmtoff(FILE *f, long gmtoff, int negate_sign);
 
 /* success:1, failure:0 */
 int print_wday(int wday);
+int fprint_wday(FILE *f, int wday);
 
 typedef struct
 {

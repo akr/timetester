@@ -109,24 +109,34 @@ int putf(const char *format, ...)
   return 0 <= ret;
 }
 
-int print_gmtoff(long gmtoff, int negate_sign)
+int fprint_gmtoff(FILE *f, long gmtoff, int negate_sign)
 {
   char buf[16];
   format_gmtoff(buf, sizeof(buf), gmtoff, negate_sign);
-  fputs(buf, stdout);
+  fputs(buf, f);
   return 0;
 }
 
-int print_wday(int wday)
+int print_gmtoff(long gmtoff, int negate_sign)
+{
+  return fprint_gmtoff(stdout, gmtoff, negate_sign);
+}
+
+int fprint_wday(FILE *f, int wday)
 {
   char buf[16];
   int ret;
   ret = format_wday(buf, sizeof(buf), wday);
   if (0 < ret && ret < (int)sizeof(buf))
-    printf("%s", buf);
+    fprintf(f, "%s", buf);
   else
-    printf("wday=%d", wday);
+    fprintf(f, "wday=%d", wday);
   return 0;
+}
+
+int print_wday(int wday)
+{
+  return fprint_wday(stdout, wday);
 }
 
 void getopt_init(getopt_t *g, int argc, char * const argv[], const char *optstring)

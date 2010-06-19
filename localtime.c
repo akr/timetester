@@ -32,6 +32,11 @@ int ps(const char *string)
   return 0 <= ret;
 }
 
+int po(long gmtoff, int negate_sign)
+{
+  return fprint_gmtoff(stdout, gmtoff, negate_sign);
+}
+
 void do_localtime(time_t t)
 {
   struct tm *tmp, result;
@@ -56,35 +61,35 @@ void do_localtime(time_t t)
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
 
   if (opt_v) {
-    (void)WITH_TM_GMTOFF(putchar(' '));
-    (void)WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0));
+    WITH_TM_GMTOFF(putchar(' '));
+    WITH_TM_GMTOFF(po(tmp->tm_gmtoff, 0));
 
     pf(" tm_isdst=%s(%d)",
       CHOOSE_ISDST(tmp->tm_isdst, "std", "dst", "unknown"),
       tmp->tm_isdst);
 
-    (void)WITH_TIMEZONE(ps(" timezone="));
-    (void)WITH_TIMEZONE(print_gmtoff(timezone, 1));
-    (void)WITH_TIMEZONE(pf("(%"PRIdTIME")", timezone));
+    WITH_TIMEZONE(ps(" timezone="));
+    WITH_TIMEZONE(po(timezone, 1));
+    WITH_TIMEZONE(pf("(%"PRIdTIME")", timezone));
 
-    (void)WITH_ALTZONE(ps(" altzone="));
-    (void)WITH_ALTZONE(print_gmtoff(altzone, 1));
-    (void)WITH_ALTZONE(pf("(%"PRIdTIME")", altzone));
+    WITH_ALTZONE(ps(" altzone="));
+    WITH_ALTZONE(po(altzone, 1));
+    WITH_ALTZONE(pf("(%"PRIdTIME")", altzone));
 
-    (void)WITH_TM_ZONE(putf(" tm_zone=%s", tmp->tm_zone));
+    WITH_TM_ZONE(pf(" tm_zone=%s", tmp->tm_zone));
 
-    (void)WITH_TZNAME(pf(" tzname=[%s,%s]", tzname[0], tzname[1]));
+    WITH_TZNAME(pf(" tzname=[%s,%s]", tzname[0], tzname[1]));
 
-    (void)WITH_DAYLIGHT(pf(" daylight=%d", daylight));
+    WITH_DAYLIGHT(pf(" daylight=%d", daylight));
   }
   else {
-    if (!WITH_TM_GMTOFF(putf(" ")))
-      (void)WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && putf(" "));
-    if (!WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0)))
-      (void)WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && print_gmtoff(tmp->tm_isdst ? altzone : timezone, 1));
+    if (!WITH_TM_GMTOFF(ps(" ")))
+      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && ps(" "));
+    if (!WITH_TM_GMTOFF(po(tmp->tm_gmtoff, 0)))
+      WITH_TIMEZONE_ALTZONE(0 <= tmp->tm_isdst && po(tmp->tm_isdst ? altzone : timezone, 1));
 
-    if (!WITH_TM_ZONE(putf(" %s", tmp->tm_zone)))
-        (void)WITH_TZNAME(0 <= tmp->tm_isdst && putf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
+    if (!WITH_TM_ZONE(pf(" %s", tmp->tm_zone)))
+        WITH_TZNAME(0 <= tmp->tm_isdst && pf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
   (str = weekday_str(tmp->tm_wday)) ? pf(" (%s)", str) :
