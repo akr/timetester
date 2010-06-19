@@ -15,6 +15,23 @@ void usage(FILE *f, int status)
   exit(status);
 }
 
+int pf(const char *format, ...)
+{
+  va_list ap;
+  int ret;
+  va_start(ap, format);
+  ret = vfprintf(stdout, format, ap);
+  va_end(ap);
+  return 0 <= ret;
+}
+
+int ps(const char *string)
+{
+  int ret;
+  ret = fputs(string, stdout);
+  return 0 <= ret;
+}
+
 void do_localtime(time_t t)
 {
   struct tm *tmp, result;
@@ -27,13 +44,13 @@ void do_localtime(time_t t)
   else
     tmp = localtime(&t);
   if (tmp == NULL) {
-    printf("%"PRIdTIME" : localtime: %s\n", t, strerror(errno));
+    pf("%"PRIdTIME" : localtime: %s\n", t, strerror(errno));
     return;
   }
 
   y = 1900 + (signed_time_t)tmp->tm_year;
 
-  printf("%"PRIdTIME" -> %"PRIdSTIME"-%02d-%02d %02d:%02d:%02d",
+  pf("%"PRIdTIME" -> %"PRIdSTIME"-%02d-%02d %02d:%02d:%02d",
     t,
     y, tmp->tm_mon + 1, tmp->tm_mday,
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
@@ -42,23 +59,23 @@ void do_localtime(time_t t)
     (void)WITH_TM_GMTOFF(putchar(' '));
     (void)WITH_TM_GMTOFF(print_gmtoff(tmp->tm_gmtoff, 0));
 
-    printf(" tm_isdst=%s(%d)",
+    pf(" tm_isdst=%s(%d)",
       CHOOSE_ISDST(tmp->tm_isdst, "std", "dst", "unknown"),
       tmp->tm_isdst);
 
-    (void)WITH_TIMEZONE(printf(" timezone="));
+    (void)WITH_TIMEZONE(ps(" timezone="));
     (void)WITH_TIMEZONE(print_gmtoff(timezone, 1));
-    (void)WITH_TIMEZONE(printf("(%"PRIdTIME")", timezone));
+    (void)WITH_TIMEZONE(pf("(%"PRIdTIME")", timezone));
 
-    (void)WITH_ALTZONE(printf(" altzone="));
+    (void)WITH_ALTZONE(ps(" altzone="));
     (void)WITH_ALTZONE(print_gmtoff(altzone, 1));
-    (void)WITH_ALTZONE(printf("(%"PRIdTIME")", altzone));
+    (void)WITH_ALTZONE(pf("(%"PRIdTIME")", altzone));
 
     (void)WITH_TM_ZONE(putf(" tm_zone=%s", tmp->tm_zone));
 
-    (void)WITH_TZNAME(printf(" tzname=[%s,%s]", tzname[0], tzname[1]));
+    (void)WITH_TZNAME(pf(" tzname=[%s,%s]", tzname[0], tzname[1]));
 
-    (void)WITH_DAYLIGHT(printf(" daylight=%d", daylight));
+    (void)WITH_DAYLIGHT(pf(" daylight=%d", daylight));
   }
   else {
     if (!WITH_TM_GMTOFF(putf(" ")))
@@ -70,10 +87,10 @@ void do_localtime(time_t t)
         (void)WITH_TZNAME(0 <= tmp->tm_isdst && putf(" %s", tzname[tmp->tm_isdst ? 1 : 0]));
   }
 
-  (str = weekday_str(tmp->tm_wday)) ? printf(" (%s)", str) :
-                                      printf(" tm_wday=%d", tmp->tm_wday);
+  (str = weekday_str(tmp->tm_wday)) ? pf(" (%s)", str) :
+                                      pf(" tm_wday=%d", tmp->tm_wday);
 
-  printf("\n");
+  ps("\n");
 }
 
 int main(int argc, char *argv[])
