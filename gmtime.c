@@ -1,4 +1,4 @@
-/* localtime.c - call localtime() function.
+/* gmtime.c - call gmtime() function.
 
 Copyright (C) 2010 Tanaka Akira.  All rights reserved.
 
@@ -29,8 +29,8 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define XTIME_STRING "localtime"
-#define XTIME_FUNC localtime
-#define XTIME_R_FUNC localtime_r
+#define XTIME_STRING "gmtime"
+#define XTIME_FUNC gmtime
+#define XTIME_R_FUNC gmtime_r
 
 #include "xtime.h"
