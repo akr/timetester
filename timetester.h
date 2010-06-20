@@ -145,31 +145,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #if SIZEOF_TIME_T == SIZEOF_INT && defined(PREFER_INT_TIME_T)
   typedef int signed_time_t;
   typedef unsigned int unsigned_time_t;
-# ifdef TIME_IS_SIGNED
-#   define PRIdTIME "d"
-# else
-#   define PRIdTIME "u"
-# endif
 # define PRIdSTIME "d"
 # define PRIdUTIME "u"
 #elif SIZEOF_TIME_T == SIZEOF_LONG
   typedef long signed_time_t;
   typedef unsigned long unsigned_time_t;
-# ifdef TIME_IS_SIGNED
-#   define PRIdTIME "ld"
-# else
-#   define PRIdTIME "lu"
-# endif
 # define PRIdSTIME "ld"
 # define PRIdUTIME "lu"
 #elif SIZEOF_TIME_T == SIZEOF_LONG_LONG
   typedef long long signed_time_t;
   typedef unsigned long long unsigned_time_t;
-# ifdef TIME_IS_SIGNED
-#   define PRIdTIME "lld"
-# else
-#   define PRIdTIME "llu"
-# endif
 # define PRIdSTIME "lld"
 # define PRIdUTIME "llu"
 #else
@@ -177,9 +162,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #ifdef TIME_IS_SIGNED
+# define PRIdTIME PRIdSTIME
 # define TIME_MAX ((time_t)((~(unsigned_time_t)0) >> 1))
 # define TIME_MIN ((time_t)(((unsigned_time_t)1) << (sizeof(time_t) * CHAR_BIT - 1)))
 #else
+# define PRIdTIME PRIdUTIME
 # define TIME_MAX ((time_t)(~(unsigned_time_t)0))
 # define TIME_MIN ((time_t)0)
 #endif
