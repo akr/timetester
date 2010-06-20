@@ -92,7 +92,7 @@ void do_localtime(time_t t)
     tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
 
   if (opt_v) {
-    WITH_TM_GMTOFF(putchar(' '));
+    WITH_TM_GMTOFF(ps(" "));
     WITH_TM_GMTOFF(po(tmp->tm_gmtoff, 0));
 
     pf(" tm_isdst=%s(%d)",
