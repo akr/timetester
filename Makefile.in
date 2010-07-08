@@ -3,7 +3,7 @@ CFLAGS = @CFLAGS@
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 
-all: localtime gmtime mktime adjtime adjtimex info
+all: localtime gmtime mktime adjtime adjtimex clock_gettime info
 
 localtime: localtime.o util.o
 gmtime: gmtime.o util.o
@@ -12,9 +12,13 @@ adjtime: adjtime.o
 adjtimex: adjtimex.o
 info: info.o util.o
 
+clock_gettime: clock_gettime.o
+	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -lrt
+
 # gcc -MM *.c
 adjtime.o: adjtime.c timetester.h config.h util.h
 adjtimex.o: adjtimex.c timetester.h config.h util.h
+clock_gettime.o: clock_gettime.c timetester.h config.h util.h
 gmtime.o: gmtime.c xtime.h timetester.h config.h util.h
 info.o: info.c timetester.h config.h util.h
 localtime.o: localtime.c xtime.h timetester.h config.h util.h
