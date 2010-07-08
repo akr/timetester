@@ -79,6 +79,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #  include <time.h>
 # endif
 #endif
+#if HAVE_SYS_TIMEX_H
+# include <sys/timex.h>
+#endif
 #if HAVE_ERRNO_H
 # include <errno.h>
 #endif
