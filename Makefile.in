@@ -13,7 +13,7 @@ adjtimex: adjtimex.o
 info: info.o util.o
 
 clock_gettime: clock_gettime.o
-	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -lrt
+	$(CC) -o $@ $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -lrt
 
 # gcc -MM *.c
 adjtime.o: adjtime.c timetester.h config.h util.h
