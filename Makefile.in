@@ -3,7 +3,10 @@ CFLAGS = @CFLAGS@
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 
-all: localtime gmtime mktime adjtime adjtimex clock_gettime info
+all: localtime gmtime mktime \
+  adjtime adjtimex \
+  gettimeofday clock_gettime \
+  info
 
 localtime: localtime.o util.o
 gmtime: gmtime.o util.o
@@ -12,6 +15,7 @@ adjtime: adjtime.o
 adjtimex: adjtimex.o
 info: info.o util.o
 
+gettimeofday: gettimeofday.o
 clock_gettime: clock_gettime.o
 	$(CC) -o $@ $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -lrt
 
