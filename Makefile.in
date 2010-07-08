@@ -3,14 +3,16 @@ CFLAGS = @CFLAGS@
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 
-all: localtime gmtime mktime info
+all: localtime gmtime mktime adjtime info
 
 localtime: localtime.o util.o
 gmtime: gmtime.o util.o
 mktime: mktime.o util.o
+adjtime: adjtime.o
 info: info.o util.o
 
 # gcc -MM *.c
+adjtime.o: adjtime.c timetester.h config.h util.h
 gmtime.o: gmtime.c xtime.h timetester.h config.h util.h
 info.o: info.c timetester.h config.h util.h
 localtime.o: localtime.c xtime.h timetester.h config.h util.h
