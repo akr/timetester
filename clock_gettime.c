@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
   ret = clock_gettime(CLOCK_REALTIME, &t);
   if (ret == -1) { perror("clock_gettime"); exit(1); }
 
-  printf("%"PRIdTIME".%06ld\n", t.tv_sec, (long)t.tv_nsec);
+  printf("%"PRIdTIME".%09ld\n", t.tv_sec, (long)t.tv_nsec);
 
   return 0;
 }
