@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
   ret = adjtimex(&tx);
   if (ret == -1) { perror("adjtimex"); exit(1); }
 
+  printf("return = %d\n", ret);
   printf("offset = %ld (usec)\n", tx.offset);
   printf("freq = %ld (scaled ppm)\n", tx.freq);
   printf("maxerror = %ld (usec)\n", tx.maxerror);
