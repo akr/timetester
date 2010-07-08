@@ -8,6 +8,13 @@ configure
 info
 localtime
 mktime
+gmtime
+adjtime
+adjtimex
+gettimeofday
+clock_gettime
 *.o
+*.i
+*.s
 *~
 *.swp
