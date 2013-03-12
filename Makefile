@@ -33,6 +33,32 @@ UTILOBJS = build/util.o
 
 all: $(TARGETS)
 
+complete-clean:
+	rm -f build/* build/.upd-*
+	rm -f configure config.log config.status
+	rm -rf autom4te.cache
+
+maintainer-clean: distclean
+	rm -f build/.upd-*.args build/.upd-*.source build/.upd-*.target
+	rm -rf autom4te.cache
+
+distclean: clean
+	rm -f config.log config.status
+	rm -f build/config.h build/includes.h
+	rm -f build/compile.sh build/link.sh
+
+clean:
+	rm -f build/*.o $(TARGETS)
+
+clean-old:
+	rm -f *.o
+	rm -f \
+	  localtime gmtime mktime \
+	  adjtime adjtimex \
+	  gettimeofday clock_gettime \
+	  stat \
+	  info
+
 configure: configure.ac
 	./tool/update-files -b build/.upd configure -- configure.ac -- autoconf
 
@@ -73,6 +99,8 @@ build/info: build/info.o build/util.o
 	sh build/link.sh build/info.o build/util.o -o $@
 
 build/gettimeofday: build/gettimeofday.o
+	sh build/link.sh build/gettimeofday.o -o $@
+
 build/clock_gettime: build/clock_gettime.o
 	sh build/link.sh build/clock_gettime.o -o $@ -lrt
 
