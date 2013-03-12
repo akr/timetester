@@ -86,9 +86,9 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(time_t)
 
 AC_MSG_CHECKING([for time_t is signed])
-AC_RUN_IFELSE(AC_LANG_PROGRAM(
+AC_RUN_IFELSE([AC_LANG_PROGRAM(
   [$incs],
-  [exit((~(time_t)0 <= 0) ? EXIT_SUCCESS : EXIT_FAILURE);]),
+  [exit((~(time_t)0 <= 0) ? EXIT_SUCCESS : EXIT_FAILURE);])],
   [AC_MSG_RESULT(yes); AC_DEFINE(TIME_IS_SIGNED, [], [Define to 1 if time_t is signed type.])],
   [AC_MSG_RESULT(no)])
 
@@ -98,9 +98,9 @@ AC_CHECK_FUNCS([mktime strtoll])
 AC_CHECK_DECLS([tzname, timezone, daylight, altzone],,,[$incs])
 
 AC_MSG_CHECKING([for timezone(zone,dst) function])
-AC_COMPILE_IFELSE(AC_LANG_PROGRAM(
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
     [$incs],
-    [timezone(0,0);]),
+    [timezone(0,0);])],
   [AC_MSG_RESULT(yes); AC_DEFINE(HAVE_FUNC_TIMEZONE, [], [Define to 1 if the function timezone() is available.])],
   [AC_MSG_RESULT(no)])
 
