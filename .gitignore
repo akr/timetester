@@ -13,6 +13,7 @@ adjtime
 adjtimex
 gettimeofday
 clock_gettime
+stat
 *.o
 *.i
 *.s

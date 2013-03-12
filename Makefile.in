@@ -6,6 +6,7 @@ LDFLAGS = @LDFLAGS@
 all: localtime gmtime mktime \
   adjtime adjtimex \
   gettimeofday clock_gettime \
+  stat \
   info
 
 localtime: localtime.o util.o
@@ -13,6 +14,7 @@ gmtime: gmtime.o util.o
 mktime: mktime.o util.o
 adjtime: adjtime.o
 adjtimex: adjtimex.o
+stat: stat.o
 info: info.o util.o
 
 gettimeofday: gettimeofday.o
@@ -23,8 +25,10 @@ clock_gettime: clock_gettime.o
 adjtime.o: adjtime.c timetester.h config.h util.h
 adjtimex.o: adjtimex.c timetester.h config.h util.h
 clock_gettime.o: clock_gettime.c timetester.h config.h util.h
+gettimeofday.o: gettimeofday.c timetester.h config.h util.h
 gmtime.o: gmtime.c xtime.h timetester.h config.h util.h
 info.o: info.c timetester.h config.h util.h
 localtime.o: localtime.c xtime.h timetester.h config.h util.h
 mktime.o: mktime.c timetester.h config.h util.h
+stat.o: stat.c timetester.h config.h util.h
 util.o: util.c timetester.h config.h util.h
