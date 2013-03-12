@@ -77,14 +77,14 @@ build/stamp-h: config.status build/config.h.in src/includes.h.in src/compile.sh.
 	./config.status
 	echo > build/stamp-h
 
-build/localtime: build/localtime.o build/util.o
-	sh build/link.sh build/localtime.o build/util.o -o $@
+build/localtime: build/localtime.o $(UTILOBJS)
+	sh build/link.sh build/localtime.o $(UTILOBJS) -o $@
 
-build/gmtime: build/gmtime.o build/util.o
-	sh build/link.sh build/gmtime.o build/util.o -o $@
+build/gmtime: build/gmtime.o $(UTILOBJS)
+	sh build/link.sh build/gmtime.o $(UTILOBJS) -o $@
 
-build/mktime: build/mktime.o build/util.o
-	sh build/link.sh build/mktime.o build/util.o -o $@
+build/mktime: build/mktime.o $(UTILOBJS)
+	sh build/link.sh build/mktime.o $(UTILOBJS) -o $@
 
 build/adjtime: build/adjtime.o
 	sh build/link.sh build/adjtime.o -o $@
@@ -95,8 +95,8 @@ build/adjtimex: build/adjtimex.o
 build/stat: build/stat.o
 	sh build/link.sh build/stat.o -o $@
 
-build/info: build/info.o build/util.o
-	sh build/link.sh build/info.o build/util.o -o $@
+build/info: build/info.o $(UTILOBJS)
+	sh build/link.sh build/info.o $(UTILOBJS) -o $@
 
 build/gettimeofday: build/gettimeofday.o
 	sh build/link.sh build/gettimeofday.o -o $@
