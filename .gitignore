@@ -1,4 +1,3 @@
-Makefile
 autom4te.cache
 autoscan.log
 config.h
@@ -19,3 +18,7 @@ stat
 *.s
 *~
 *.swp
+stamp-h
+compile.sh
+link.sh
+includes.h

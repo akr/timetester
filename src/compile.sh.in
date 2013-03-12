@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# @configure_input@
+
+@CC@ -Ibuild -Isrc @CFLAGS@ @CPPFLAGS@ -c "$@"

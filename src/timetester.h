@@ -30,6 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "config.h"
+#include "includes.h"
 
 #if HAVE_DECL_TIMEZONE && !defined(HAVE_FUNC_TIMEZONE)
 # define HAVE_VAR_TIMEZONE 1
