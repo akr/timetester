@@ -85,24 +85,40 @@ AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(time_t)
 
-AC_MSG_CHECKING([for time_t is signed])
-AC_RUN_IFELSE([AC_LANG_PROGRAM(
-  [$incs],
-  [exit((~(time_t)0 <= 0) ? EXIT_SUCCESS : EXIT_FAILURE);])],
-  [AC_MSG_RESULT(yes); AC_DEFINE(TIME_IS_SIGNED, [], [Define to 1 if time_t is signed type.])],
-  [AC_MSG_RESULT(no)])
+AC_CHECK_MEMBERS([struct stat.st_atim],,,[$incs])
+AC_CHECK_MEMBERS([struct stat.st_mtim],,,[$incs])
+AC_CHECK_MEMBERS([struct stat.st_ctim],,,[$incs])
+
+AC_DEFUN([TIMETEST_CHECK_SIGNED_TIME_T],
+[AC_CACHE_CHECK([for time_t is signed], [timetest_cv_signed_time_t],
+  AC_RUN_IFELSE([AC_LANG_PROGRAM(
+    [$incs],
+    [exit((~(time_t)0 <= 0) ? EXIT_SUCCESS : EXIT_FAILURE);])],
+    [timetest_cv_signed_time_t=yes],
+    [timetest_cv_signed_time_t=no]))
+if test "x$timetest_cv_signed_time_t" = xyes; then
+  AC_DEFINE([TIME_IS_SIGNED], [1],
+            [Define to 1 if time_t is signed type.])
+fi])
+TIMETEST_CHECK_SIGNED_TIME_T
 
 # Checks for library functions.
 AC_CHECK_FUNCS([mktime strtoll])
 
 AC_CHECK_DECLS([tzname, timezone, daylight, altzone],,,[$incs])
 
-AC_MSG_CHECKING([for timezone(zone,dst) function])
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-    [$incs],
-    [timezone(0,0);])],
-  [AC_MSG_RESULT(yes); AC_DEFINE(HAVE_FUNC_TIMEZONE, [], [Define to 1 if the function timezone() is available.])],
-  [AC_MSG_RESULT(no)])
+AC_DEFUN([TIMETEST_CHECK_TIMEZONE_FUNCTION],
+[AC_CACHE_CHECK([for timezone(zone,dst) function], [timetest_cv_timezone_function],
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+      [$incs],
+      [timezone(0,0);])],
+    [timetest_cv_timezone_function=yes],
+    [timetest_cv_timezone_function=no]))
+if test "x$timetest_cv_timezone_function" = xyes; then
+  AC_DEFINE(HAVE_FUNC_TIMEZONE, [1],
+            [Define to 1 if the function timezone() is available.])
+fi])
+TIMETEST_CHECK_TIMEZONE_FUNCTION
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
