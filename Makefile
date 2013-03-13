@@ -104,16 +104,16 @@ build/gettimeofday: build/gettimeofday.o
 build/clock_gettime: build/clock_gettime.o
 	sh build/link.sh build/clock_gettime.o -o $@ -lrt
 
-build/adjtime.o: ; sh build/compile.sh src/adjtime.c -o $@
-build/adjtimex.o: ; sh build/compile.sh src/adjtimex.c -o $@
-build/clock_gettime.o: ; sh build/compile.sh src/clock_gettime.c -o $@
-build/gettimeofday.o: ; sh build/compile.sh src/gettimeofday.c -o $@
-build/gmtime.o: ; sh build/compile.sh src/gmtime.c -o $@
-build/info.o: ; sh build/compile.sh src/info.c -o $@
-build/localtime.o: ; sh build/compile.sh src/localtime.c -o $@
-build/mktime.o: ; sh build/compile.sh src/mktime.c -o $@
-build/stat.o: ; sh build/compile.sh src/stat.c -o $@
-build/util.o: ; sh build/compile.sh src/util.c -o $@
+build/adjtime.o: build/compile.sh; sh build/compile.sh src/adjtime.c -o $@
+build/adjtimex.o: build/compile.sh; sh build/compile.sh src/adjtimex.c -o $@
+build/clock_gettime.o: build/compile.sh; sh build/compile.sh src/clock_gettime.c -o $@
+build/gettimeofday.o: build/compile.sh; sh build/compile.sh src/gettimeofday.c -o $@
+build/gmtime.o: build/compile.sh; sh build/compile.sh src/gmtime.c -o $@
+build/info.o: build/compile.sh; sh build/compile.sh src/info.c -o $@
+build/localtime.o: build/compile.sh; sh build/compile.sh src/localtime.c -o $@
+build/mktime.o: build/compile.sh; sh build/compile.sh src/mktime.c -o $@
+build/stat.o: build/compile.sh; sh build/compile.sh src/stat.c -o $@
+build/util.o: build/compile.sh; sh build/compile.sh src/util.c -o $@
 
 # gcc -Ibuild -Isrc -MM src/*.c|sed 's/^/build\//'
 build/adjtime.o: src/adjtime.c src/timetester.h build/config.h src/util.h
