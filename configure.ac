@@ -96,7 +96,7 @@ TIMETEST_CHECK_SIGNED_TIME_T
 
 # Checks for library functions.
 
-AC_CHECK_FUNCS([mktime strtoll])
+AC_CHECK_FUNCS([mktime strtoll adjtime adjtimex])
 
 AC_CHECK_DECLS([tzname, timezone, daylight, altzone],,,[$TIMETEST_INCLUDES])
 

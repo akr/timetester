@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 int main(int argc, char *argv[])
 {
+#ifdef CLOCK_REALTIME
   struct timespec t;
   int ret;
 
@@ -42,4 +43,8 @@ int main(int argc, char *argv[])
   printf("%"PRIdTIME".%09ld\n", t.tv_sec, (long)t.tv_nsec);
 
   return 0;
+#else
+  fprintf(stderr, "CLOCK_REALTIME not available.\n");
+  return EXIT_FAILURE;
+#endif
 }

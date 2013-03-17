@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 int main(int argc, char *argv[])
 {
+#ifdef HAVE_ADJTIMEX
   struct timex tx;
   int ret;
 
@@ -54,4 +55,8 @@ int main(int argc, char *argv[])
   printf("tick = %ld\n", tx.tick);
 
   return 0;
+#else
+  fprintf(stderr, "adjtimex() not available.\n");
+  return EXIT_FAILURE;
+#endif
 }

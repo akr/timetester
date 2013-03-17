@@ -1,6 +1,6 @@
 /* adjtime.c - call adjtime() function.
 
-Copyright (C) 2010 Tanaka Akira.  All rights reserved.
+Copyright (C) 2010-2013 Tanaka Akira.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 int main(int argc, char *argv[])
 {
+#ifdef HAVE_ADJTIME
   struct timeval olddelta;
   int ret;
 
@@ -43,4 +44,8 @@ int main(int argc, char *argv[])
   printf("olddelta.tv_sec = %"PRIdTIME".%06ld\n", olddelta.tv_sec, (long)olddelta.tv_usec);
 
   return 0;
+#else
+  fprintf(stderr, "adjtime() not available.\n");
+  return EXIT_FAILURE;
+#endif
 }
