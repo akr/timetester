@@ -1,5 +1,0 @@
-= developpment document
-
-== rebuild configure and config.h.in
-
-  % autoreconf
