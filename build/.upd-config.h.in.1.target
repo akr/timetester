@@ -1,5 +1,11 @@
 /* build/config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the `adjtime' function. */
+#undef HAVE_ADJTIME
+
+/* Define to 1 if you have the `adjtimex' function. */
+#undef HAVE_ADJTIMEX
+
 /* Define to 1 if you have the declaration of `altzone', and to 0 if you
    don't. */
 #undef HAVE_DECL_ALTZONE
@@ -170,5 +176,11 @@
    this defined. */
 #undef _POSIX_1_SOURCE
 
+/* This program uses POSIX 2001 features. */
+#undef _POSIX_C_SOURCE
+
 /* Define to 1 if you need to in order for `stat' and other things to work. */
 #undef _POSIX_SOURCE
+
+/* This program uses SUSv2 (1997) features. */
+#undef _XOPEN_SOURCE

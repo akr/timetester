@@ -32,10 +32,33 @@ AC_PREREQ([2.61])
 AC_INIT([timetester], [0.1])
 
 AC_CONFIG_SRCDIR([README])
+AC_CONFIG_AUX_DIR([tool])
 AC_CONFIG_HEADERS([build/config.h])
+
+AC_CANONICAL_BUILD
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
 
 # Checks for programs.
 AC_PROG_CC
+
+# Features this program uses:
+#
+# - snprintf
+#   Minix declares it only if
+#     __STDC_VERSION__ >= 199901L || 
+#     (_POSIX_C_SOURCE >= 200112L) ||
+#     (defined(_XOPEN_SOURCE) && defined(_XOPEN_SOURCE_EXTENDED)) ||
+#     (_XOPEN_SOURCE >= 500) || 
+#     defined(_ISOC99_SOURCE)
+#
+AS_CASE([$host],
+[*-minix*], [
+  AC_DEFINE(_XOPEN_SOURCE, [500], [This program uses SUSv2 (1997) features.])
+  AC_DEFINE(_POSIX_C_SOURCE, [200112L], [This program uses POSIX 2001 features.])
+])
+
+
 AC_USE_SYSTEM_EXTENSIONS
 
 # Checks for libraries.
@@ -96,7 +119,7 @@ TIMETEST_CHECK_SIGNED_TIME_T
 
 # Checks for library functions.
 
-AC_CHECK_FUNCS([mktime strtoll])
+AC_CHECK_FUNCS([mktime strtoll adjtime adjtimex])
 
 AC_CHECK_DECLS([tzname, timezone, daylight, altzone],,,[$TIMETEST_INCLUDES])
 
