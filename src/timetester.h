@@ -167,11 +167,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifdef TIME_IS_SIGNED
 # define PRIdTIME PRIdSTIME
-# define TIME_MAX ((time_t)((~(unsigned_time_t)0) >> 1))
+# ifndef TIME_MAX
+#  define TIME_MAX ((time_t)((~(unsigned_time_t)0) >> 1))
+# endif
 # define TIME_MIN ((time_t)(((unsigned_time_t)1) << (sizeof(time_t) * CHAR_BIT - 1)))
 #else
 # define PRIdTIME PRIdUTIME
-# define TIME_MAX ((time_t)(~(unsigned_time_t)0))
+# ifndef TIME_MAX
+#  define TIME_MAX ((time_t)(~(unsigned_time_t)0))
+# endif
 # define TIME_MIN ((time_t)0)
 #endif
 
