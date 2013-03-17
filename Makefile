@@ -102,7 +102,7 @@ build/gettimeofday: build/gettimeofday.o
 	sh build/link.sh build/gettimeofday.o -o $@
 
 build/clock_gettime: build/clock_gettime.o
-	sh build/link.sh build/clock_gettime.o -o $@ -lrt
+	sh build/link.sh build/clock_gettime.o -o $@
 
 build/adjtime.o: build/compile.sh; sh build/compile.sh src/adjtime.c -o $@
 build/adjtimex.o: build/compile.sh; sh build/compile.sh src/adjtimex.c -o $@

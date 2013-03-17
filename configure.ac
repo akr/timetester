@@ -39,6 +39,7 @@ AC_PROG_CC
 AC_USE_SYSTEM_EXTENSIONS
 
 # Checks for libraries.
+AC_CHECK_LIB([rt], [clock_gettime]) # GNU/Linux.
 
 # Checks for header files.
 
