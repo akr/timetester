@@ -115,18 +115,24 @@ build/mktime.o: build/compile.sh; sh build/compile.sh src/mktime.c -o $@
 build/stat.o: build/compile.sh; sh build/compile.sh src/stat.c -o $@
 build/util.o: build/compile.sh; sh build/compile.sh src/util.c -o $@
 
-# gcc -Ibuild -Isrc -MM src/*.c|sed 's/^/build\//'
-build/adjtime.o: src/adjtime.c src/timetester.h build/config.h src/util.h
-build/adjtimex.o: src/adjtimex.c src/timetester.h build/config.h src/util.h
+# gcc -MM -Ibuild -Isrc src/*.c | sed 's/^[^ ]/build\/&/' 
+build/adjtime.o: src/adjtime.c src/timetester.h build/config.h build/includes.h \
+ src/util.h
+build/adjtimex.o: src/adjtimex.c src/timetester.h build/config.h \
+ build/includes.h src/util.h
 build/clock_gettime.o: src/clock_gettime.c src/timetester.h build/config.h \
-src/util.h
+ build/includes.h src/util.h
 build/gettimeofday.o: src/gettimeofday.c src/timetester.h build/config.h \
-src/util.h
+ build/includes.h src/util.h
 build/gmtime.o: src/gmtime.c src/xtime.h src/timetester.h build/config.h \
-src/util.h
-build/info.o: src/info.c src/timetester.h build/config.h src/util.h
+ build/includes.h src/util.h
+build/info.o: src/info.c src/timetester.h build/config.h build/includes.h \
+ src/util.h
 build/localtime.o: src/localtime.c src/xtime.h src/timetester.h build/config.h \
-src/util.h
-build/mktime.o: src/mktime.c src/timetester.h build/config.h src/util.h
-build/stat.o: src/stat.c src/timetester.h build/config.h src/util.h
-build/util.o: src/util.c src/timetester.h build/config.h src/util.h
+ build/includes.h src/util.h
+build/mktime.o: src/mktime.c src/timetester.h build/config.h build/includes.h \
+ src/util.h
+build/stat.o: src/stat.c src/timetester.h build/config.h build/includes.h \
+ src/util.h
+build/util.o: src/util.c src/timetester.h build/config.h build/includes.h \
+ src/util.h
