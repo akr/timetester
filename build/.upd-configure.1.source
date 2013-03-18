@@ -62,7 +62,10 @@ AS_CASE([$host],
 AC_USE_SYSTEM_EXTENSIONS
 
 # Checks for libraries.
-AC_CHECK_LIB([rt], [clock_gettime]) # GNU/Linux.
+
+# GNU/Linux.  clock_gettime require librt before glibc 2.17.  glibc 2.17 and later don't need librt.
+# http://sourceware.org/ml/libc-alpha/2012-12/msg00413.html
+AC_CHECK_LIB([rt], [clock_gettime])
 
 # Checks for header files.
 
