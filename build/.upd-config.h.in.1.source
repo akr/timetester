@@ -111,7 +111,7 @@ AC_DEFUN([TIMETEST_CHECK_SIGNED_TIME_T],
 [AC_CACHE_CHECK([for time_t is signed], [timetest_cv_signed_time_t],
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
     [$TIMETEST_INCLUDES],
-    [[[int ary[(~(time_t)0 <= 0) ? 1 : -1]; return 0;]]])],
+    [int ary@<:@(~(time_t)0 <= 0) ? 1 : -1@:>@; return 0;])],
     [timetest_cv_signed_time_t=yes],
     [timetest_cv_signed_time_t=no]))
 if test "x$timetest_cv_signed_time_t" = xyes; then
